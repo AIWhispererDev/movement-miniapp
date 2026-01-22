@@ -1,0 +1,75 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2025-01-15T00:00:00Z",
+  "apps": [
+    {
+      "id": "neon-racer-3d",
+      "name": "Neon Racer 3D",
+      "description": "High-speed 3D racing game with blockchain rewards",
+      "icon": "https://example.com/neon-racer/icon.png",
+      "url": "https://neon-racer.vercel.app",
+      "category": "game",
+      "verified": true,
+      "featured": true,
+      "author": {
+        "name": "Movement Labs",
+        "wallet": "0x..."
+      },
+      "permissions": ["haptic", "storage"],
+      "version": "1.0.0",
+      "updated": "2025-01-15",
+      "downloads": 1250,
+      "rating": 4.8,
+      "screenshots": [
+        "https://example.com/neon-racer/screenshot1.png",
+        "https://example.com/neon-racer/screenshot2.png"
+      ]
+    },
+    {
+      "id": "rpg-battle",
+      "name": "RPG Battle",
+      "description": "Turn-based RPG with on-chain rewards and leveling",
+      "icon": "https://example.com/rpg-battle/icon.png",
+      "url": "https://rpg-battle.vercel.app",
+      "category": "game",
+      "verified": true,
+      "featured": true,
+      "author": {
+        "name": "Movement Labs",
+        "wallet": "0x..."
+      },
+      "permissions": ["haptic", "notifications", "storage"],
+      "version": "1.0.0",
+      "updated": "2025-01-15",
+      "downloads": 980,
+      "rating": 4.7
+    },
+    {
+      "id": "token-swap",
+      "name": "Quick Swap",
+      "description": "Fast and simple token swapping interface",
+      "icon": "https://example.com/quick-swap/icon.png",
+      "url": "https://quick-swap.vercel.app",
+      "category": "defi",
+      "verified": true,
+      "featured": false,
+      "author": {
+        "name": "DeFi Builder",
+        "wallet": "0x..."
+      },
+      "permissions": ["storage"],
+      "version": "1.2.0",
+      "updated": "2025-01-14",
+      "downloads": 2500,
+      "rating": 4.9
+    }
+  ],
+  "categories": [
+    { "id": "game", "name": "Games", "icon": "🎮" },
+    { "id": "defi", "name": "DeFi", "icon": "💰" },
+    { "id": "nft", "name": "NFTs", "icon": "🖼️" },
+    { "id": "social", "name": "Social", "icon": "👥" },
+    { "id": "utility", "name": "Utilities", "icon": "🔧" },
+    { "id": "productivity", "name": "Productivity", "icon": "📊" }
+  ]
+}

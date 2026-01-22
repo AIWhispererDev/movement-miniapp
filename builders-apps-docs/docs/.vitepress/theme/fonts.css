@@ -1,0 +1,55 @@
+/* TWK Everett - Movement Brand Font */
+@font-face {
+  font-family: 'TWK Everett';
+  src: url('/fonts/TWKEverett-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TWK Everett';
+  src: url('/fonts/TWKEverett-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TWK Everett';
+  src: url('/fonts/TWKEverett-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TWK Everett';
+  src: url('/fonts/TWKEverett-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* TWK Everett Mono - Code font */
+@font-face {
+  font-family: 'TWK Everett Mono';
+  src: url('/fonts/TWKEverettMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TWK Everett Mono';
+  src: url('/fonts/TWKEverettMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply TWK Everett as the default font */
+:root {
+  --vp-font-family-base: 'TWK Everett', ui-sans-serif, system-ui, sans-serif;
+  --vp-font-family-mono: 'TWK Everett Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}

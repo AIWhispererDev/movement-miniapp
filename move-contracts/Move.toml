@@ -1,0 +1,11 @@
+[package]
+name = "app_registry"
+version = "1.0.0"
+authors = ["ME Team"]
+license = "MIT"
+
+[addresses]
+app_registry = "_"
+
+[dependencies]
+AptosFramework = { git = "https://github.com/movementlabsxyz/aptos-core.git", rev = "l1-migration", subdir = "aptos-move/framework/aptos-framework" }

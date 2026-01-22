@@ -1,0 +1,420 @@
+/**
+ * Movement Mini Apps Documentation Theme
+ * Clean, minimal design using Movement design system colors
+ */
+
+:root {
+  /* Movement brand colors */
+  --vp-c-brand-1: #81ffba;  /* Guild Green */
+  --vp-c-brand-2: #6de5a3;
+  --vp-c-brand-3: #59cc8a;
+  --vp-c-brand-soft: rgba(129, 255, 186, 0.14);
+
+  /* Yellow accent */
+  --vp-c-yellow-1: #ffda34;
+  --vp-c-yellow-2: #e5c42f;
+  --vp-c-yellow-3: #ccae2a;
+  --vp-c-yellow-soft: rgba(255, 218, 52, 0.14);
+
+  /* Background - Light mode */
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-soft: #f9fafb;
+  --vp-c-bg-mute: #f3f4f6;
+  --vp-c-bg-alt: #ffffff;
+
+  /* Text - Light mode */
+  --vp-c-text-1: #111827;
+  --vp-c-text-2: #4b5563;
+  --vp-c-text-3: #6b7280;
+
+  /* Borders */
+  --vp-c-border: #e5e7eb;
+  --vp-c-divider: #e5e7eb;
+  --vp-c-gutter: #e5e7eb;
+
+  /* Code blocks */
+  --vp-code-block-bg: #1e1e1e;
+  --vp-code-bg: #f3f4f6;
+  --vp-code-color: #111827;
+
+  /* Shadows */
+  --vp-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --vp-shadow-2: 0 3px 12px rgba(0, 0, 0, 0.07);
+  --vp-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  /* Background - Dark mode */
+  --vp-c-bg: #0f172a;
+  --vp-c-bg-soft: #1e293b;
+  --vp-c-bg-mute: #334155;
+  --vp-c-bg-alt: #0f172a;
+
+  /* Text - Dark mode */
+  --vp-c-text-1: #f1f5f9;
+  --vp-c-text-2: #cbd5e1;
+  --vp-c-text-3: #94a3b8;
+
+  /* Borders - Dark mode */
+  --vp-c-border: #334155;
+  --vp-c-divider: #1e293b;
+  --vp-c-gutter: #1e293b;
+
+  /* Code - Dark mode */
+  --vp-code-bg: #1e293b;
+  --vp-code-color: #e2e8f0;
+}
+
+/* Clean scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--vp-c-brand-1) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(129, 255, 186, 0.4);
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(129, 255, 186, 0.6);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(129, 255, 186, 0.2);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(129, 255, 186, 0.3);
+}
+
+/* Typography - Cleaner, less styled */
+.vp-doc h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc h3 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc p {
+  line-height: 1.7;
+  margin: 1rem 0;
+}
+
+/* Code blocks - Minimal styling */
+.vp-doc [class*='language-'] {
+  border-radius: 8px;
+  margin: 1rem 0;
+  border: 1px solid var(--vp-c-border);
+}
+
+/* Light mode only: match code block bg to inline snippets */
+html:not(.dark) .vp-doc [class*='language-'] {
+  background-color: #f3f4f6 !important;
+}
+
+html:not(.dark) .vp-doc [class*='language-'] > pre {
+  background-color: #f3f4f6 !important;
+}
+
+.vp-doc :not(pre) > code {
+  background-color: var(--vp-c-bg-mute);
+  color: var(--vp-c-text-1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: 500;
+  border: 1px solid var(--vp-c-border);
+}
+
+/* Links - Use Guild Green */
+.vp-doc a {
+  color: var(--vp-c-brand-3);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.vp-doc a:hover {
+  color: var(--vp-c-brand-1);
+}
+
+/* Tables - Clean look */
+.vp-doc table {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--vp-c-border);
+  margin: 1.5rem 0;
+  background: var(--vp-c-bg);
+}
+
+.vp-doc th {
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+.vp-doc td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.vp-doc tr:last-child td {
+  border-bottom: none;
+}
+
+/* Blockquotes - Minimal */
+.vp-doc blockquote {
+  border-left: 3px solid var(--vp-c-brand-1);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--vp-c-text-2);
+}
+
+/* Custom containers - Clean design */
+.vp-doc .tip,
+.vp-doc .warning,
+.vp-doc .danger {
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  border-left: 3px solid;
+  background: var(--vp-c-bg-soft);
+}
+
+.vp-doc .tip {
+  border-left-color: var(--vp-c-brand-1);
+}
+
+.vp-doc .warning {
+  border-left-color: var(--vp-c-yellow-1);
+}
+
+.vp-doc .danger {
+  border-left-color: #ef4444;
+}
+
+/* Navigation - Clean solid background */
+.VPNav {
+  background-color: var(--vp-c-bg) !important;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.dark .VPNav {
+  background-color: var(--vp-c-bg) !important;
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+/* Force navbar container background */
+.VPNavBar,
+.VPNavBar .container,
+.VPNavBar .content {
+  background-color: var(--vp-c-bg) !important;
+}
+
+.dark .VPNavBar,
+.dark .VPNavBar .container,
+.dark .VPNavBar .content {
+  background-color: var(--vp-c-bg) !important;
+}
+
+/* Nav bar title */
+.VPNavBarTitle .title {
+  color: var(--vp-c-text-1) !important;
+  font-weight: 600;
+}
+
+/* Nav links */
+.VPNavBarMenu .VPLink {
+  color: var(--vp-c-text-1) !important;
+  font-weight: 500;
+}
+
+.VPNavBarMenu .VPLink:hover {
+  color: var(--vp-c-brand-3) !important;
+}
+
+/* Nav menu items */
+.VPNavBarMenuLink {
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPNavBarMenuLink:hover {
+  color: var(--vp-c-brand-3) !important;
+}
+
+/* Sidebar - Minimal styling */
+.VPSidebar {
+  background: var(--vp-c-bg-alt);
+}
+
+/* Active sidebar item with Guild Green */
+.VPSidebarItem.level-0.is-link.is-active > .item > .link {
+  color: var(--vp-c-brand-3);
+}
+
+.VPSidebarItem.level-0.is-link.is-active > .item > .link:hover {
+  color: var(--vp-c-brand-1);
+}
+
+/* Buttons - Guild Green theme */
+.VPButton.brand {
+  background-color: var(--vp-c-brand-1);
+  color: #000000;
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.VPButton.brand:hover {
+  background-color: var(--vp-c-brand-2);
+  transform: translateY(-1px);
+}
+
+.VPButton.alt {
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  border: 1px solid var(--vp-c-border);
+}
+
+.VPButton.alt:hover {
+  background-color: var(--vp-c-bg-mute);
+  border-color: var(--vp-c-brand-1);
+}
+
+/* Home hero - Clean with Guild Green */
+.VPHero .name {
+  color: var(--vp-c-text-1);
+}
+
+.VPHero .text {
+  background: linear-gradient(120deg, var(--vp-c-brand-1) 0%, var(--vp-c-brand-3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Clean focus states */
+*:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove excessive shadows and gradients */
+.vp-doc [class*='language-'],
+.vp-doc table,
+.vp-doc .tip,
+.vp-doc .warning,
+.vp-doc .danger {
+  box-shadow: none;
+}
+
+/* Clean list styling */
+.vp-doc ul,
+.vp-doc ol {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.vp-doc li {
+  margin: 0.5rem 0;
+  line-height: 1.7;
+}
+
+/* Badge styling with Guild Green */
+.vp-doc .badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-3);
+  border: 1px solid var(--vp-c-brand-1);
+}
+
+/* Search - Guild Green accent */
+.VPNavBarSearch .DocSearch-Button {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  transition: all 0.2s;
+}
+
+.VPNavBarSearch .DocSearch-Button:hover {
+  background: var(--vp-c-bg-mute);
+  border-color: var(--vp-c-brand-1);
+}
+
+/* Mobile menu toggle */
+.VPNavBarMenuGroup button {
+  color: var(--vp-c-text-1);
+}
+
+/* Feature cards on home page */
+.VPFeatures {
+  padding: 2rem 0;
+}
+
+.VPFeature {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.2s;
+}
+
+.VPFeature:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 4px 12px rgba(129, 255, 186, 0.1);
+}
+
+.VPFeature .icon {
+  color: var(--vp-c-brand-1);
+}

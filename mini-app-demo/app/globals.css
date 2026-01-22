@@ -1,0 +1,18 @@
+@import "movement-design-system/component-styles";
+@import "movement-design-system/theme";
+@import "tailwindcss";
+
+/* Base resets */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

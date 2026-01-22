@@ -1,0 +1,42 @@
+{
+  "name": "vitepress-project",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:docs\" \"npm run dev:api\"",
+    "dev:docs": "vitepress dev docs",
+    "dev:api": "tsx watch api/server.ts",
+    "build": "vitepress build docs",
+    "serve": "vitepress serve docs",
+    "export": "npm run build && tar -czf movement-miniapp-docs.tar.gz -C docs/.vitepress/dist . && echo '✅ Exported to movement-miniapp-docs.tar.gz'",
+    "export:versioned": "npm run build && tar -czf movement-miniapp-docs-$(date +%Y%m%d-%H%M%S).tar.gz -C docs/.vitepress/dist . && echo '✅ Exported with timestamp'",
+    "export:zip": "npm run build && cd docs/.vitepress/dist && zip -r ../../../movement-miniapp-docs.zip . && cd ../../.. && echo '✅ Exported to movement-miniapp-docs.zip'"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "concurrently": "^9.2.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.0.0",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-llms": "^1.9.1",
+    "vue": "^3.5.13"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search"
+      ]
+    }
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.23",
+    "@aptos-labs/ts-sdk": "^5.1.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "ai": "^5.0.60",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "movement-design-system": "github:movementlabsxyz/movement-design-system#shadcn",
+    "zod": "^4.1.12"
+  }
+}

@@ -1,0 +1,27 @@
+# robots.txt for Movement Mini Apps Documentation
+
+User-agent: *
+Allow: /
+
+# AI/LLM crawlers can access llms.txt
+User-agent: GPTBot
+Allow: /llms.txt
+
+User-agent: ChatGPT-User
+Allow: /llms.txt
+
+User-agent: CCBot
+Allow: /llms.txt
+
+User-agent: anthropic-ai
+Allow: /llms.txt
+
+User-agent: Claude-Web
+Allow: /llms.txt
+
+# Sitemap (if you have one)
+# Sitemap: https://docs.movementlabs.xyz/sitemap.xml
+
+
+
+

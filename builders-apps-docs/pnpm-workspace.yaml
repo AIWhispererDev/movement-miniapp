@@ -1,0 +1,3 @@
+onlyBuiltDependencies:
+  - "@movementlabsxyz/movement-design-system"
+  - "movement-design-system"

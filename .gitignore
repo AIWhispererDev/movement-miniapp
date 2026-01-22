@@ -1,0 +1,17 @@
+.DS_Store
+
+**/.movement/
+**/.movement/**
+**/.aptos/
+**/.aptos/**
+**/build/
+
+**/.next/
+**/node_modules/
+
+## Panda
+styled-system
+styled-system-studio
+
+## Environment variables
+**/.env*

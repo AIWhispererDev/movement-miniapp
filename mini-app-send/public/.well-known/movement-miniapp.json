@@ -1,0 +1,26 @@
+{
+  "name": "Send Tokens",
+  "description": "Send MOVE tokens instantly with low fees. Simple, fast, and secure token transfers.",
+  "icon": "💸",
+  "version": "1.0.0",
+  "author": {
+    "name": "Movement Labs",
+    "address": "0x1",
+    "website": "https://movementnetwork.xyz"
+  },
+  "category": "utility",
+  "tags": ["transfer", "wallet", "tokens", "payments"],
+  "url": "https://mini-app-send-tokens.vercel.app",
+  "permissions": [
+    "wallet.read",
+    "wallet.sign"
+  ],
+  "verified": true,
+  "verificationMethod": "registry",
+  "theme": {
+    "primaryColor": "#667eea",
+    "accentColor": "#764ba2"
+  },
+  "supportedNetworks": ["mainnet", "testnet"],
+  "minimumWalletBalance": "0"
+}

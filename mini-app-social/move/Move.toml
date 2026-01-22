@@ -1,0 +1,11 @@
+[package]
+name = "social"
+version = "0.0.1"
+
+[addresses]
+social = "_"
+
+[dependencies]
+AptosFramework = { git = "https://github.com/movementlabsxyz/aptos-core.git", subdir = "aptos-move/framework/aptos-framework", rev = "movement" }
+
+
