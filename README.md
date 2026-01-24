@@ -14,7 +14,3 @@ The mini app examples are a set of mini apps that can be used with the Movement 
 
 The Mini App Send Tokens is a mini app that allows users to send tokens to other users.
 
-### Mini App Claim
-
-The Mini App Claim is a mini app that allows users to claim tokens from a smart contract.
-
