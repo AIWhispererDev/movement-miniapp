@@ -2,6 +2,14 @@
 
 Build your first Movement mini app in 5 minutes.
 
+::: tip Using AI Coding Assistants?
+Feed these docs directly to your AI tools for better code generation:
+- **[llms.txt](/llms.txt)** - Documentation index (quick context)
+- **[llms-full.txt](/llms-full.txt)** - Complete docs in one file (comprehensive)
+
+Works with Cursor, Claude Code, GitHub Copilot, and other AI assistants.
+:::
+
 ## What You'll Build
 
 A simple app that:

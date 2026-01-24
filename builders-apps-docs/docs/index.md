@@ -142,6 +142,37 @@ async function sendTokens() {
 
 ---
 
+## Build with AI
+
+Using **Cursor**, **Claude Code**, **GitHub Copilot**, or other AI coding assistants? Feed these docs directly to your AI for better mini app code generation:
+
+<div class="ai-docs-grid">
+
+<a href="/llms.txt" class="ai-doc-card">
+  <div class="ai-doc-icon">⚡</div>
+  <div class="ai-doc-content">
+    <h3>llms.txt</h3>
+    <p>Quick context - documentation index with table of contents</p>
+  </div>
+</a>
+
+<a href="/llms-full.txt" class="ai-doc-card">
+  <div class="ai-doc-icon">📚</div>
+  <div class="ai-doc-content">
+    <h3>llms-full.txt</h3>
+    <p>Complete docs - all pages concatenated in one file</p>
+  </div>
+</a>
+
+</div>
+
+```bash
+# Example: Add to Cursor rules or Claude Code context
+curl -o llms-full.txt https://mini-app-docs.vercel.app/llms-full.txt
+```
+
+---
+
 ## Resources
 
 <div class="resource-grid">
@@ -159,16 +190,6 @@ async function sendTokens() {
 <a href="/guidelines/design" class="resource-card">
   <h3>🎨 Design Guidelines</h3>
   <p>Build beautiful, native-feeling UIs</p>
-</a>
-
-<a href="/llms.txt" class="resource-card">
-  <h3>🤖 LLMs.txt</h3>
-  <p>AI-optimized documentation index for LLMs and coding assistants. Includes table of contents and links to all documentation sections.</p>
-</a>
-
-<a href="/llms-full.txt" class="resource-card">
-  <h3>📚 LLMs-full.txt</h3>
-  <p>Complete documentation content in a single file. Contains all pages' full content for comprehensive AI understanding.</p>
 </a>
 
 </div>
@@ -382,6 +403,50 @@ async function sendTokens() {
 
 .community-links strong a:hover {
   text-decoration: underline;
+}
+
+/* AI Docs Grid */
+.ai-docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.ai-doc-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(108, 226, 161, 0.1), rgba(108, 226, 161, 0.02));
+  border: 1px solid var(--color-guild-green-400, #6ce2a1);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.ai-doc-card:hover {
+  background: linear-gradient(135deg, rgba(108, 226, 161, 0.15), rgba(108, 226, 161, 0.05));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 226, 161, 0.2);
+}
+
+.ai-doc-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.ai-doc-content h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+  font-family: monospace;
+  color: var(--vp-c-brand-1);
+}
+
+.ai-doc-content p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--vp-c-text-2);
 }
 
 @media (max-width: 640px) {
