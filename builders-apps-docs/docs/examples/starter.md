@@ -13,12 +13,12 @@ The Starter App demonstrates:
 
 ## Repository
 
-The starter app is available in the `mini-app-starter` directory of the [mini-app-examples](https://github.com/movementlabsxyz/miniapp-examples) repository.
+A starter app featuring the Movement Design System is available in the `mini-app-starter-ds` directory of the [mini-app-examples](https://github.com/moveindustries/mini-app-examples) repository.
 
 ## Quick Start
 
 ```bash
-cd mini-app-starter
+cd mini-app-starter-ds
 npm install
 npm run dev
 ```
@@ -46,7 +46,7 @@ The app includes a simple Move contract with:
 ## Project Structure
 
 ```
-mini-app-starter/
+mini-app-starter-ds/
 ├── move/
 │   ├── sources/
 │   │   └── counter.move    # Move smart contract

@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/* Base resets */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Helvetica", "Arial", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #00D4AA;
+  color: #000;
+  border-color: #00D4AA;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #00B894;
+  border-color: #00B894;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #6B7280;
+  border-color: #D1D5DB;
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: #F3F4F6;
+  border-color: #9CA3AF;
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn-outline {
+    color: #9CA3AF;
+    border-color: #4B5563;
+  }
+
+  .btn-outline:hover:not(:disabled) {
+    background-color: #374151;
+    border-color: #6B7280;
+  }
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
