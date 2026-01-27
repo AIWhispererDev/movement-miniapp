@@ -1,8 +1,8 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'movement-design-system';
 import DiscoverSection from '@/components/DiscoverSection';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'movement-design-system';
 
 export default function Home() {
   return (
@@ -31,7 +31,7 @@ export default function Home() {
                     <span className="text-white font-semibold text-sm">1</span>
                   </div>
                   <p className="text-gray-700 dark:text-gray-300">
-                    Share a mini-app link on social media with beautiful previews
+                    Share a mini-app link on social media with beautiful preview media.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -39,7 +39,7 @@ export default function Home() {
                     <span className="text-white font-semibold text-sm">2</span>
                   </div>
                   <p className="text-gray-700 dark:text-gray-300">
-                    When someone clicks the link, they see the app info and can open it
+                    When someone clicks the link, they come to a dedicated page in this site.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -47,7 +47,7 @@ export default function Home() {
                     <span className="text-white font-semibold text-sm">3</span>
                   </div>
                   <p className="text-gray-700 dark:text-gray-300">
-                    The app opens directly in Move Everything or redirects to download
+                    The site opens the appropriate mini app in the Movement app directly or prompts users to install.
                   </p>
                 </div>
               </div>
