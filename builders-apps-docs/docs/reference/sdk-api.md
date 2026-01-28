@@ -1170,7 +1170,7 @@ function App() {
 
 ### `useAnalytics()`
 
-React hook for tracking analytics events in mini apps. Events are sent through the host app's analytics service with automatic mini-app context enrichment.
+React hook for tracking analytics events in mini apps. Events are sent through the host app's analytics service with automatic mini app context enrichment.
 
 **Returns:**
 
