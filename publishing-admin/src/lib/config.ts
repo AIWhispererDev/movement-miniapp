@@ -15,5 +15,5 @@ export const INDEXER_URL = process.env.NEXT_PUBLIC_INDEXER_URL;
 
 export const isAdmin = (address: string | undefined): boolean => {
   if (!address) return false;
-  return ADMIN_ADDRESSES.includes(address);
+  return ADMIN_ADDRESSES.includes(address.toLowerCase());
 };
