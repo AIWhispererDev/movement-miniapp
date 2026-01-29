@@ -1,4 +1,4 @@
-import { Aptos, AptosConfig, Network } from '@aptos-labs/ts-sdk';
+import { Aptos, AptosConfig, Network, AccountAddress } from '@aptos-labs/ts-sdk';
 import { REGISTRY_ADDRESS } from './config';
 import { AppMetadata, PendingChange } from '@/types/app';
 
@@ -103,15 +103,35 @@ export async function getPendingChange(appId: number): Promise<PendingChange | n
   }
 }
 
+// Normalize address to proper 0x + 64 hex chars format
+function normalizeAddress(address: string): string {
+  if (!address || typeof address !== 'string') {
+    throw new Error('Invalid address: must be a non-empty string');
+  }
+  let hex = address.toLowerCase().trim();
+  if (hex.startsWith('0x')) {
+    hex = hex.slice(2);
+  }
+  // Remove any non-hex characters
+  hex = hex.replace(/[^0-9a-f]/g, '');
+  // Pad to 64 characters if needed
+  hex = hex.padStart(64, '0');
+  return `0x${hex}`;
+}
+
 export async function checkIsOwner(address: string): Promise<boolean> {
   try {
+    console.log('checkIsOwner called with address:', address);
     const aptos = getAptosClient();
+    const normalizedAddress = normalizeAddress(address);
+    console.log('Normalized address:', normalizedAddress);
     const result = await aptos.view({
       payload: {
         function: `${REGISTRY_ADDRESS}::app_registry::check_is_owner`,
-        functionArguments: [address],
+        functionArguments: [normalizedAddress],
       },
     });
+    console.log('checkIsOwner result:', result);
     return result[0] as boolean;
   } catch (error) {
     console.error('Error checking owner:', error);

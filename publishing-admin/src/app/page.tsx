@@ -10,6 +10,7 @@ import {
   approveApp,
   approveRejectedApp,
   approveUpdate,
+  checkIsOwner,
   getAllApps,
   getPendingChange,
   getStats,
@@ -17,7 +18,6 @@ import {
   rejectApp,
   revertToPending,
 } from '@/lib/aptos';
-import { isAdmin } from '@/lib/config';
 import { AppMetadata, AppStatus } from '@/types/app';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useEffect, useState } from 'react';
@@ -33,8 +33,30 @@ export default function Dashboard() {
   const [stats, setStats] = useState({ total: 0, approved: 0, pending: 0 });
   const [loading, setLoading] = useState(true);
   const [processingApp, setProcessingApp] = useState<number | null>(null);
+  const [userIsAdmin, setUserIsAdmin] = useState(false);
+  const [checkingAdmin, setCheckingAdmin] = useState(true);
 
-  const userIsAdmin = isAdmin(account?.address);
+  // Check if connected wallet is an on-chain owner
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      if (!account?.address) {
+        setUserIsAdmin(false);
+        setCheckingAdmin(false);
+        return;
+      }
+      setCheckingAdmin(true);
+      try {
+        const isOwner = await checkIsOwner(account.address);
+        setUserIsAdmin(isOwner);
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+        setUserIsAdmin(false);
+      } finally {
+        setCheckingAdmin(false);
+      }
+    };
+    checkAdminStatus();
+  }, [account?.address]);
 
   useEffect(() => {
     // Only load data if user is logged in AND is an admin
@@ -277,6 +299,11 @@ export default function Dashboard() {
                 Make sure your wallet is configured for <strong>Movement Network Testnet</strong> before connecting.
               </p>
             </div>
+          </div>
+        ) : checkingAdmin ? (
+          <div className="text-center py-20">
+            <div className="animate-spin text-4xl mb-4">⏳</div>
+            <p className="text-gray-600 dark:text-gray-400">Checking admin status...</p>
           </div>
         ) : !userIsAdmin ? (
           <div className="text-center py-20">

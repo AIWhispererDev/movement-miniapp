@@ -2,12 +2,13 @@
 
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useEffect, useState } from 'react';
-import { isAdmin } from '@/lib/config';
+import { checkIsOwner } from '@/lib/aptos';
 
 export function WalletButton() {
   const { account, connected, disconnect, wallet } = useWallet();
   const [walletName, setWalletName] = useState<string>('');
   const [showWalletModal, setShowWalletModal] = useState(false);
+  const [userIsAdmin, setUserIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (wallet?.name) {
@@ -15,11 +16,25 @@ export function WalletButton() {
     }
   }, [wallet]);
 
+  useEffect(() => {
+    const checkAdmin = async () => {
+      if (!account?.address) {
+        setUserIsAdmin(null);
+        return;
+      }
+      try {
+        const isOwner = await checkIsOwner(account.address);
+        setUserIsAdmin(isOwner);
+      } catch {
+        setUserIsAdmin(false);
+      }
+    };
+    checkAdmin();
+  }, [account?.address]);
+
   const shortAddress = account?.address
     ? `${account.address.slice(0, 6)}...${account.address.slice(-4)}`
     : '';
-
-  const userIsAdmin = isAdmin(account?.address);
 
   if (!connected) {
     return (
@@ -40,7 +55,7 @@ export function WalletButton() {
 
   return (
     <div className="flex items-center gap-3">
-      {!userIsAdmin && (
+      {userIsAdmin === false && (
         <span className="text-red-600 dark:text-red-400 text-sm font-medium">
           ⚠️ Not Admin
         </span>
