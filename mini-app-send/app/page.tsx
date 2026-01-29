@@ -73,7 +73,7 @@ export default function SendTokensPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
-  const [network, setNetwork] = useState<string>('mainnet');
+  const [network, setNetwork] = useState<string | null>(null);  // Start as null until SDK provides it
 
   // Theme colors
   const theme = {
@@ -138,11 +138,11 @@ export default function SendTokensPage() {
 
   // Fetch coin balance using RPC view call
   const fetchAssetBalance = useCallback(async (coinType: string, userAddress: string, decimals: number) => {
-    if (!userAddress) return;
+    if (!userAddress || !network) return;
 
     setIsLoadingBalance(true);
     try {
-      const rpcUrl = RPC_URLS[network] || RPC_URLS.mainnet;
+      const rpcUrl = RPC_URLS[network];
 
       // Use RPC view call to get coin balance
       const response = await fetch(`${rpcUrl}/view`, {
@@ -183,15 +183,16 @@ export default function SendTokensPage() {
 
 
   // Fetch asset balance when address, selected token, or network changes
+  // Only fetch when network is known (not null) to avoid fetching from wrong RPC
   useEffect(() => {
-    if (address && selectedToken) {
+    if (address && selectedToken && network) {
       fetchAssetBalance(selectedToken.coinType, address, selectedToken.decimals);
     }
   }, [address, selectedToken, network, fetchAssetBalance]);
 
   // Auto-refresh balance every 30 seconds
   useEffect(() => {
-    if (!address || !selectedToken) return;
+    if (!address || !selectedToken || !network) return;
 
     const intervalId = setInterval(() => {
       console.log('[Send App] Auto-refreshing balance...');
@@ -199,7 +200,7 @@ export default function SendTokensPage() {
     }, 30000);
 
     return () => clearInterval(intervalId);
-  }, [address, selectedToken, fetchAssetBalance]);
+  }, [address, selectedToken, network, fetchAssetBalance]);
 
   const handleSend = async () => {
     if (!sdk || !address) {
@@ -375,15 +376,17 @@ export default function SendTokensPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <h1 className="text-xl font-bold" style={{ color: theme.text.primary }}>Send Token</h1>
-                  <span
-                    className="text-xs px-2 py-0.5 rounded-full font-medium"
-                    style={{
-                      backgroundColor: network === 'testnet' ? '#F59E0B20' : '#10B98120',
-                      color: network === 'testnet' ? '#F59E0B' : '#10B981'
-                    }}
-                  >
-                    {network}
-                  </span>
+                  {network && (
+                    <span
+                      className="text-xs px-2 py-0.5 rounded-full font-medium"
+                      style={{
+                        backgroundColor: network === 'testnet' ? '#F59E0B20' : '#10B98120',
+                        color: network === 'testnet' ? '#F59E0B' : '#10B981'
+                      }}
+                    >
+                      {network}
+                    </span>
+                  )}
                 </div>
                 <p className="text-sm" style={{ color: theme.text.secondary }}>Transfer tokens instantly</p>
               </div>
