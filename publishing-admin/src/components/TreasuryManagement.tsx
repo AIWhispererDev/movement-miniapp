@@ -21,7 +21,7 @@ export function TreasuryManagement({
   const [showTreasuryModal, setShowTreasuryModal] = useState(false);
   const [showFeeModal, setShowFeeModal] = useState(false);
   const [newTreasuryAddress, setNewTreasuryAddress] = useState('');
-  const [newFeeMOVE, setNewFeeMOVE] = useState('10');
+  const [newFeeMOVE, setNewFeeMOVE] = useState('1');
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
@@ -230,7 +230,7 @@ export function TreasuryManagement({
                 min="0"
                 value={newFeeMOVE}
                 onChange={(e) => setNewFeeMOVE(e.target.value)}
-                placeholder="10.00"
+                placeholder="1.00"
                 className="w-full p-3 pr-16 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">

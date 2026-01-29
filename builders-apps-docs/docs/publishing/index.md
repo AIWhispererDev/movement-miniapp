@@ -101,14 +101,14 @@ Before submitting, ensure your app meets these requirements:
 
 ### 💰 Submission Fee
 
-A **10 MOVE** submission fee is required to submit your app for review. This one-time fee:
+A **1 MOVE** submission fee is required to submit your app for review. This one-time fee:
 
 - Prevents spam submissions
 - Ensures serious developers
 - Helps maintain registry quality
 - Is non-refundable
 
-Make sure your wallet has at least **10 MOVE + gas fees** before submitting.
+Make sure your wallet has at least **1 MOVE + gas fees** before submitting.
 
 ## Submission Process
 

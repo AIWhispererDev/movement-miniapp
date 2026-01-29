@@ -912,8 +912,8 @@ async function loadSubmissionFee() {
     submissionFeeOctas.value = Number(feeResult[0])
   } catch (err: any) {
     console.error('Error loading submission fee:', err)
-    // Default to 10 MOVE if we can't fetch
-    submissionFeeOctas.value = 1000000000
+    // Default to 1 MOVE if we can't fetch
+    submissionFeeOctas.value = 100000000
   }
 }
 
