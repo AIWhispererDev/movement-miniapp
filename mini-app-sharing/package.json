@@ -19,6 +19,12 @@
     "react-dom": "19.2.1",
     "tailwindcss": "^4.1.14"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@moveindustries/movement-design-system",
+      "movement-design-system"
+    ]
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
