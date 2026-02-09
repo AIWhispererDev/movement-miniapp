@@ -36,7 +36,7 @@
     "ai": "^5.0.60",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "movement-design-system": "github:movementlabsxyz/movement-design-system#shadcn",
+    "movement-design-system": "github:moveindustries/movement-design-system",
     "zod": "^4.1.12"
   }
 }

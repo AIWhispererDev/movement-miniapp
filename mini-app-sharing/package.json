@@ -12,7 +12,7 @@
     "@aptos-labs/ts-sdk": "^5.1.1",
     "@tailwindcss/postcss": "^4.1.14",
     "autoprefixer": "^10.4.21",
-    "movement-design-system": "github:movementlabsxyz/movement-design-system",
+    "movement-design-system": "github:moveindustries/movement-design-system",
     "next": "15.5.7",
     "postcss": "^8.5.6",
     "react": "19.2.1",
