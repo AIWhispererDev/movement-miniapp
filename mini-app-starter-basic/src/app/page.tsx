@@ -51,25 +51,30 @@ export default function CounterPage() {
 
     try {
       setError("");
-      const result = await sdk.view({
-        function: `${COUNTER_MODULE_ADDRESS}::counter::get_value`,
+
+      // First check if counter is initialized
+      const initialized = await sdk.view({
+        function: `${COUNTER_MODULE_ADDRESS}::counter::is_initialized`,
         type_arguments: [],
         function_arguments: [address],
       });
+      const isInit = Array.isArray(initialized) ? initialized[0] : initialized;
+      setIsInitialized(Boolean(isInit));
 
-      // SDK view returns the result directly, which may be an array
-      const value = Array.isArray(result) ? result[0] : result;
-      const numValue = Number(value || 0);
-      setCounter(numValue);
-
-      // If we can successfully read the value, the counter is initialized
-      // (the view function returns 0 if not exists, but we'll assume if it doesn't error, it exists)
-      // Actually, let's check by trying to see if the resource exists
-      // For now, we'll assume if fetchCounter succeeds, the resource exists
-      setIsInitialized(true);
+      if (isInit) {
+        // Only fetch value if initialized
+        const result = await sdk.view({
+          function: `${COUNTER_MODULE_ADDRESS}::counter::get_value`,
+          type_arguments: [],
+          function_arguments: [address],
+        });
+        const value = Array.isArray(result) ? result[0] : result;
+        setCounter(Number(value || 0));
+      } else {
+        setCounter(0);
+      }
     } catch (err) {
       console.error("[Counter] Failed to fetch:", err);
-      // If view fails, counter might not be initialized
       setIsInitialized(false);
       setCounter(0);
     }

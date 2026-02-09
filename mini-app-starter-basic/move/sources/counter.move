@@ -29,12 +29,18 @@ module counter::counter {
         counter.value = 0;
     }
 
-    /// View function to read the counter value
     #[view]
+    /// View function to read the counter value
     public fun get_value(owner: address): u64 acquires Counter {
         if (!exists<Counter>(owner)) {
             return 0
         };
         borrow_global<Counter>(owner).value
+    }
+
+    #[view]
+    /// Check if counter is initialized for an address
+    public fun is_initialized(owner: address): bool {
+        exists<Counter>(owner)
     }
 }

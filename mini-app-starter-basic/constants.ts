@@ -1,4 +1,4 @@
 // Update this with your deployed contract address
 export const COUNTER_MODULE_ADDRESS =
   process.env.NEXT_PUBLIC_COUNTER_MODULE_ADDRESS ||
-  "0xf36c92f6d7ffde21aaa8e9be5033faba63c2bcb2246e1c6f0f52bcf5f35a607b";
+  "0x195bd4c0ef8af0ed7e856889d4375a540093fa03d788baea1034b534a39bda08";
