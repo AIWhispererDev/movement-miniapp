@@ -449,12 +449,14 @@ function generateFlags(app: AppMetadata, checks: ReviewCheck[]): ReviewFlag[] {
     });
   }
 
-  if (highRiskRequested.includes('camera') || highRiskRequested.includes('location')) {
+  const sensitivePerms = highRiskRequested.filter(p => p !== 'sign_transaction');
+  if (sensitivePerms.length > 0) {
+    const plural = sensitivePerms.length > 1;
     flags.push({
       severity: 'warning',
       code: 'SENSITIVE_PERMISSION',
-      message: `App requests sensitive permission: ${highRiskRequested.filter(p => p !== 'sign_transaction').join(', ')}`,
-      details: 'Verify the app has a legitimate need for these permissions',
+      message: `App requests sensitive ${plural ? 'permissions' : 'permission'}: ${sensitivePerms.join(', ')}`,
+      details: `Verify the app has a legitimate need for ${plural ? 'these permissions' : 'this permission'}`,
     });
   }
 
