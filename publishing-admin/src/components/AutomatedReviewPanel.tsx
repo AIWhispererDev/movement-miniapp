@@ -361,11 +361,16 @@ export function AutomatedReviewPanel({ app, onReviewComplete, onChecklistComplet
 
             <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                <span className="text-red-500">*</span> Required checks before approval
+                <span className="text-red-500">*</span> Required before approval
               </p>
-              {allRequiredChecked && (
+              {allRequiredChecked && result && (
                 <p className="text-xs text-green-600 dark:text-green-400 mt-1 font-medium">
-                  All required checks completed - ready to approve
+                  Ready to approve
+                </p>
+              )}
+              {allRequiredChecked && !result && (
+                <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1 font-medium">
+                  Run automated checks to continue
                 </p>
               )}
             </div>
