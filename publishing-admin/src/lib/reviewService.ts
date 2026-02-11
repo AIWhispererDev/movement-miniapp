@@ -5,7 +5,6 @@ import {
   ReviewRecommendation,
   ReviewStatus,
   REVIEW_CHECKS,
-  REVIEW_THRESHOLDS,
 } from '@/types/review';
 import { AppMetadata } from '@/types/app';
 
@@ -536,26 +535,16 @@ function determineStatus(checks: ReviewCheck[], flags: ReviewFlag[]): ReviewStat
 }
 
 /**
- * Determine recommendation based on score and flags
+ * Determine recommendation based on flags
  */
 function determineRecommendation(score: number, flags: ReviewFlag[]): ReviewRecommendation {
-  // Critical flags = auto reject candidate
   if (flags.some(f => f.severity === 'critical')) {
-    return ReviewRecommendation.AUTO_REJECT;
+    return ReviewRecommendation.FAILED;
   }
 
-  // Score-based recommendations
-  if (score >= REVIEW_THRESHOLDS.ALL_CHECKS_PASSED && !flags.some(f => f.severity === 'warning')) {
-    return ReviewRecommendation.ALL_CHECKS_PASSED;
+  if (flags.some(f => f.severity === 'warning')) {
+    return ReviewRecommendation.WARNINGS;
   }
 
-  if (score >= REVIEW_THRESHOLDS.QUICK_REVIEW) {
-    return ReviewRecommendation.QUICK_REVIEW;
-  }
-
-  if (score >= REVIEW_THRESHOLDS.FULL_REVIEW) {
-    return ReviewRecommendation.FULL_REVIEW;
-  }
-
-  return ReviewRecommendation.AUTO_REJECT;
+  return ReviewRecommendation.PASSED;
 }

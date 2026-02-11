@@ -19,10 +19,9 @@ export enum ReviewStatus {
 }
 
 export enum ReviewRecommendation {
-  ALL_CHECKS_PASSED = 'all_checks_passed',
-  QUICK_REVIEW = 'quick_review',
-  FULL_REVIEW = 'full_review',
-  AUTO_REJECT = 'auto_reject',
+  PASSED = 'passed',
+  WARNINGS = 'warnings',
+  FAILED = 'failed',
 }
 
 export interface ReviewCheck {
@@ -93,13 +92,6 @@ export const REVIEW_CHECKS = {
   },
 } as const;
 
-// Thresholds for recommendations
-export const REVIEW_THRESHOLDS = {
-  ALL_CHECKS_PASSED: 90,
-  QUICK_REVIEW: 70,
-  FULL_REVIEW: 50,
-  // Below 50 = AUTO_REJECT
-};
 
 // Status display helpers
 export const REVIEW_STATUS_LABELS: Record<ReviewStatus, string> = {
@@ -117,15 +109,13 @@ export const REVIEW_STATUS_COLORS: Record<ReviewStatus, string> = {
 };
 
 export const RECOMMENDATION_LABELS: Record<ReviewRecommendation, string> = {
-  [ReviewRecommendation.ALL_CHECKS_PASSED]: 'All Checks Passed',
-  [ReviewRecommendation.QUICK_REVIEW]: 'Quick Review',
-  [ReviewRecommendation.FULL_REVIEW]: 'Full Review Required',
-  [ReviewRecommendation.AUTO_REJECT]: 'Auto-Reject Candidate',
+  [ReviewRecommendation.PASSED]: 'Checks Passed',
+  [ReviewRecommendation.WARNINGS]: 'Has Warnings',
+  [ReviewRecommendation.FAILED]: 'Checks Failed',
 };
 
 export const RECOMMENDATION_COLORS: Record<ReviewRecommendation, string> = {
-  [ReviewRecommendation.ALL_CHECKS_PASSED]: '#10b981',
-  [ReviewRecommendation.QUICK_REVIEW]: '#3b82f6',
-  [ReviewRecommendation.FULL_REVIEW]: '#f59e0b',
-  [ReviewRecommendation.AUTO_REJECT]: '#ef4444',
+  [ReviewRecommendation.PASSED]: '#10b981',
+  [ReviewRecommendation.WARNINGS]: '#f59e0b',
+  [ReviewRecommendation.FAILED]: '#ef4444',
 };

@@ -194,26 +194,21 @@ export function AutomatedReviewPanel({ app, onReviewComplete, onChecklistComplet
             </div>
           </div>
 
-          {/* Recommendation Badge */}
+          {/* Result Badge */}
           <div
-            className="rounded-lg p-3 border"
+            className="rounded-lg p-2 border inline-flex items-center gap-2"
             style={{
               backgroundColor: RECOMMENDATION_COLORS[result.recommendation] + '10',
               borderColor: RECOMMENDATION_COLORS[result.recommendation] + '40',
             }}
           >
-            <div className="flex items-center gap-2">
-              <RecommendationIcon recommendation={result.recommendation} />
-              <span
-                className="text-sm font-semibold"
-                style={{ color: RECOMMENDATION_COLORS[result.recommendation] }}
-              >
-                {RECOMMENDATION_LABELS[result.recommendation]}
-              </span>
-            </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-              {getRecommendationDescription(result.recommendation)}
-            </p>
+            <RecommendationIcon recommendation={result.recommendation} />
+            <span
+              className="text-sm font-semibold"
+              style={{ color: RECOMMENDATION_COLORS[result.recommendation] }}
+            >
+              {RECOMMENDATION_LABELS[result.recommendation]}
+            </span>
           </div>
 
           {/* Flags */}
@@ -406,33 +401,17 @@ function FlagIcon({ severity }: { severity: string }) {
 
 function RecommendationIcon({ recommendation }: { recommendation: ReviewRecommendation }) {
   switch (recommendation) {
-    case ReviewRecommendation.ALL_CHECKS_PASSED:
+    case ReviewRecommendation.PASSED:
       return <span>&#10003;</span>;
-    case ReviewRecommendation.QUICK_REVIEW:
-      return <span>&#128269;</span>;
-    case ReviewRecommendation.FULL_REVIEW:
-      return <span>&#128221;</span>;
-    case ReviewRecommendation.AUTO_REJECT:
+    case ReviewRecommendation.WARNINGS:
+      return <span>&#9888;</span>;
+    case ReviewRecommendation.FAILED:
       return <span>&#10007;</span>;
   }
 }
 
 function getScoreColor(score: number): string {
-  if (score >= 90) return '#10b981';
-  if (score >= 70) return '#3b82f6';
+  if (score >= 80) return '#10b981';
   if (score >= 50) return '#f59e0b';
   return '#ef4444';
-}
-
-function getRecommendationDescription(recommendation: ReviewRecommendation): string {
-  switch (recommendation) {
-    case ReviewRecommendation.ALL_CHECKS_PASSED:
-      return 'All automated checks passed. Complete the manual checklist to approve.';
-    case ReviewRecommendation.QUICK_REVIEW:
-      return 'Most checks passed. Complete the manual checklist to approve.';
-    case ReviewRecommendation.FULL_REVIEW:
-      return 'Some concerns detected. Review carefully before approving.';
-    case ReviewRecommendation.AUTO_REJECT:
-      return 'Critical issues detected. Consider rejecting unless issues can be explained.';
-  }
 }
