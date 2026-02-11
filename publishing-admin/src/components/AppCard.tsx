@@ -2,6 +2,7 @@
 
 import { APP_STATUS_COLORS, APP_STATUS_LABELS, AppMetadata, AppStatus, CATEGORY_LABELS, LANGUAGE_LABELS, PERMISSION_LABELS, PendingChange } from '@/types/app';
 import { useState } from 'react';
+import { AutomatedReviewPanel } from './AutomatedReviewPanel';
 
 interface AppCardProps {
   app: AppMetadata;
@@ -409,6 +410,11 @@ function AppDetailsModal({
               <span className="text-xs">↗</span>
             </a>
           </div>
+
+          {/* Automated Review */}
+          {app.status === AppStatus.PENDING && (
+            <AutomatedReviewPanel app={app} />
+          )}
 
           {/* Permissions */}
           <div>
