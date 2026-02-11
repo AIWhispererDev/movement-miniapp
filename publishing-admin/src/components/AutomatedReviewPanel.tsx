@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AppMetadata } from '@/types/app';
 import {
   AutomatedReviewResult,
@@ -14,7 +14,8 @@ import {
 
 interface AutomatedReviewPanelProps {
   app: AppMetadata;
-  onReviewComplete?: (result: AutomatedReviewResult) => void;
+  onReviewComplete?: (result?: AutomatedReviewResult) => void;
+  onChecklistComplete?: (complete: boolean) => void;
 }
 
 // Generate checklist items based on app metadata
@@ -77,17 +78,29 @@ interface ChecklistItem {
   required: boolean;
 }
 
-export function AutomatedReviewPanel({ app, onReviewComplete }: AutomatedReviewPanelProps) {
+export function AutomatedReviewPanel({ app, onReviewComplete, onChecklistComplete }: AutomatedReviewPanelProps) {
   const [isRunning, setIsRunning] = useState(false);
   const [result, setResult] = useState<AutomatedReviewResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
-  const [showChecklist, setShowChecklist] = useState(false);
+  const [showChecklist, setShowChecklist] = useState(true); // Start expanded
 
   const checklistItems = getManualChecklistItems(app);
   const requiredItems = checklistItems.filter(item => item.required);
   const checkedRequiredCount = requiredItems.filter(item => checkedItems[item.id]).length;
   const allRequiredChecked = checkedRequiredCount === requiredItems.length;
+
+  // Notify parent when checklist completion changes
+  useEffect(() => {
+    onChecklistComplete?.(allRequiredChecked);
+  }, [allRequiredChecked, onChecklistComplete]);
+
+  // Notify parent when automated review completes
+  useEffect(() => {
+    if (result) {
+      onReviewComplete?.(result);
+    }
+  }, [result, onReviewComplete]);
 
   const toggleChecked = (id: string) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));

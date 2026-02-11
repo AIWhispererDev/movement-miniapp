@@ -147,30 +147,29 @@ export function AppCard({
 
           {/* Actions */}
           <div className="flex items-center gap-2 pt-4 border-t border-gray-200 dark:border-gray-800">
-            <button
-              onClick={() => setShowDetails(true)}
-              className="text-sm text-guild-green-600 dark:text-guild-green-400 hover:text-guild-green-700 dark:hover:text-guild-green-300 font-medium"
-            >
-              View Details →
-            </button>
+            {app.status === AppStatus.PENDING ? (
+              <button
+                onClick={() => setShowDetails(true)}
+                className="text-sm text-guild-green-600 dark:text-guild-green-400 hover:text-guild-green-700 dark:hover:text-guild-green-300 font-medium"
+              >
+                View Details and Run Checks →
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowDetails(true)}
+                className="text-sm text-guild-green-600 dark:text-guild-green-400 hover:text-guild-green-700 dark:hover:text-guild-green-300 font-medium"
+              >
+                View Details →
+              </button>
+            )}
 
             {isAdmin && app.status === AppStatus.PENDING && app.app_id !== undefined && (
-              <>
-                <button
-                  onClick={() => onApprove?.(app.app_id!)}
-                  disabled={isProcessing}
-                  className="ml-auto px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isProcessing ? 'Processing...' : 'Approve'}
-                </button>
-                <button
-                  onClick={() => setShowRejectModal(true)}
-                  disabled={isProcessing}
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Reject
-                </button>
-              </>
+              <button
+                onClick={() => setShowDetails(true)}
+                className="ml-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                Review App
+              </button>
             )}
 
             {isAdmin && app.status === AppStatus.REJECTED && app.app_id !== undefined && (
@@ -217,6 +216,10 @@ export function AppCard({
             setShowDetails(false);
             setShowUpdateDetails(true);
           }}
+          isAdmin={isAdmin}
+          isProcessing={isProcessing}
+          onApprove={onApprove && app.app_id !== undefined ? () => onApprove(app.app_id!) : undefined}
+          onReject={onReject && app.app_id !== undefined ? (reason: string) => onReject(app.app_id!, reason) : undefined}
         />
       )}
 
@@ -284,14 +287,28 @@ function AppDetailsModal({
   pendingChange,
   hasPendingUpdate,
   onClose,
-  onShowUpdateDetails
+  onShowUpdateDetails,
+  isAdmin,
+  isProcessing,
+  onApprove,
+  onReject,
 }: {
   app: AppMetadata;
   pendingChange?: PendingChange | null;
   hasPendingUpdate?: boolean;
   onClose: () => void;
   onShowUpdateDetails?: () => void;
+  isAdmin?: boolean;
+  isProcessing?: boolean;
+  onApprove?: () => void;
+  onReject?: (reason: string) => void;
 }) {
+  const [reviewCompleted, setReviewCompleted] = useState(false);
+  const [checklistCompleted, setChecklistCompleted] = useState(false);
+  const [showRejectInput, setShowRejectInput] = useState(false);
+  const [rejectReason, setRejectReason] = useState('');
+
+  const canApprove = reviewCompleted && checklistCompleted;
   const isImageIcon = /https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)(\?.*)?$/i.test(app.icon);
 
   return (
@@ -413,7 +430,11 @@ function AppDetailsModal({
 
           {/* Automated Review */}
           {app.status === AppStatus.PENDING && (
-            <AutomatedReviewPanel app={app} />
+            <AutomatedReviewPanel
+              app={app}
+              onReviewComplete={() => setReviewCompleted(true)}
+              onChecklistComplete={(complete) => setChecklistCompleted(complete)}
+            />
           )}
 
           {/* Permissions */}
@@ -567,6 +588,79 @@ function AppDetailsModal({
               )}
             </div>
           </div>
+
+          {/* Admin Actions for Pending Apps */}
+          {isAdmin && app.status === AppStatus.PENDING && onApprove && onReject && (
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+              {!canApprove && (
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3 mb-4">
+                  <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                    {!reviewCompleted && !checklistCompleted && (
+                      <>Run automated checks and complete the manual review checklist before approving.</>
+                    )}
+                    {reviewCompleted && !checklistCompleted && (
+                      <>Complete all required items in the manual review checklist before approving.</>
+                    )}
+                    {!reviewCompleted && checklistCompleted && (
+                      <>Run automated checks before approving.</>
+                    )}
+                  </p>
+                </div>
+              )}
+
+              {showRejectInput ? (
+                <div className="space-y-3">
+                  <textarea
+                    value={rejectReason}
+                    onChange={(e) => setRejectReason(e.target.value)}
+                    placeholder="Reason for rejection..."
+                    className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    rows={3}
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setShowRejectInput(false)}
+                      className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (rejectReason.trim()) {
+                          onReject(rejectReason);
+                          onClose();
+                        }
+                      }}
+                      disabled={!rejectReason.trim() || isProcessing}
+                      className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isProcessing ? 'Rejecting...' : 'Confirm Reject'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowRejectInput(true)}
+                    disabled={isProcessing}
+                    className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Reject
+                  </button>
+                  <button
+                    onClick={() => {
+                      onApprove();
+                      onClose();
+                    }}
+                    disabled={!canApprove || isProcessing}
+                    className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isProcessing ? 'Approving...' : canApprove ? 'Approve' : 'Complete Review to Approve'}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
