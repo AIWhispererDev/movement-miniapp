@@ -147,12 +147,12 @@ export function AppCard({
 
           {/* Actions */}
           <div className="flex items-center gap-2 pt-4 border-t border-gray-200 dark:border-gray-800">
-            {app.status === AppStatus.PENDING ? (
+            {isAdmin && app.status === AppStatus.PENDING && app.app_id !== undefined ? (
               <button
                 onClick={() => setShowDetails(true)}
-                className="text-sm text-guild-green-600 dark:text-guild-green-400 hover:text-guild-green-700 dark:hover:text-guild-green-300 font-medium"
+                className="ml-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
               >
-                View Details and Run Checks →
+                Review App →
               </button>
             ) : (
               <button
@@ -160,15 +160,6 @@ export function AppCard({
                 className="text-sm text-guild-green-600 dark:text-guild-green-400 hover:text-guild-green-700 dark:hover:text-guild-green-300 font-medium"
               >
                 View Details →
-              </button>
-            )}
-
-            {isAdmin && app.status === AppStatus.PENDING && app.app_id !== undefined && (
-              <button
-                onClick={() => setShowDetails(true)}
-                className="ml-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
-              >
-                Review App
               </button>
             )}
 
@@ -313,17 +304,17 @@ function AppDetailsModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-gray-900 rounded-xl p-6 max-w-3xl w-full shadow-2xl my-8"
+        className="bg-white dark:bg-gray-900 rounded-xl p-6 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center gap-4">
-            {/* Large Icon Thumbnail */}
-            <div className="w-24 h-24 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 flex-shrink-0">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-3">
+            {/* Icon Thumbnail */}
+            <div className="w-14 h-14 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 flex-shrink-0">
               {isImageIcon ? (
                 <img
                   src={app.icon}
@@ -334,12 +325,12 @@ function AppDetailsModal({
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
                     if (target.parentElement) {
-                      target.parentElement.innerHTML = `<div class="text-5xl">${app.icon}</div>`;
+                      target.parentElement.innerHTML = `<div class="text-3xl">${app.icon}</div>`;
                     }
                   }}
                 />
               ) : (
-                <div className="text-5xl">{app.icon}</div>
+                <div className="text-3xl">{app.icon}</div>
               )}
             </div>
             <div>
@@ -378,32 +369,7 @@ function AppDetailsModal({
           </button>
         </div>
 
-        <div className="space-y-6">
-          {/* App Icon Preview Section */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-              App Icon
-            </h3>
-            <div className="w-32 h-32 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700">
-              {isImageIcon ? (
-                <img
-                  src={app.icon}
-                  alt={`${app.name} icon`}
-                  className="w-full h-full rounded-lg object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    if (target.parentElement) {
-                      target.parentElement.innerHTML = `<div class="text-6xl">${app.icon}</div>`;
-                    }
-                  }}
-                />
-              ) : (
-                <div className="text-6xl">{app.icon}</div>
-              )}
-            </div>
-          </div>
-
+        <div className="space-y-4">
           {/* Description */}
           <div>
             <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
