@@ -25,18 +25,9 @@ When viewing a pending app, click **"Run Checks"** in the Automated Review panel
 
 ### Step 2: Interpret the Results
 
-**Score (0-100)**: Weighted average of all checks.
+**Score (0-100)**: Weighted average of all automated checks. Higher is better.
 
-**Recommendations:**
-
-| Recommendation | Score | What To Do |
-|----------------|-------|------------|
-| **Auto-Approve Candidate** | 90+ | All checks passed. Safe to approve with minimal review. Just verify the app does what it claims. |
-| **Quick Review** | 70-89 | Most checks passed. Spend 2-3 minutes verifying functionality before approving. |
-| **Full Review Required** | 50-69 | Some concerns. Open the app, test it thoroughly, check for scam indicators. |
-| **Auto-Reject Candidate** | <50 | Critical failures. Reject unless the developer can explain the issues. |
-
-**Flags**: Pay attention to these warnings:
+**Flags**:
 
 - **Critical** (red): Blocking issues like URL not accessible
 - **Warning** (yellow): Concerns that need manual verification
@@ -95,12 +86,7 @@ Security concern - We identified potential security issues with your app. Please
 
 ## Review Time Targets
 
-| Recommendation | Target Review Time |
-|----------------|-------------------|
-| Auto-Approve Candidate | Same day |
-| Quick Review | Same day |
-| Full Review Required | 1-2 days |
-| Auto-Reject Candidate | Same day (reject or request info) |
+Target: Review all submissions within 1-2 business days.
 
 ## When to Escalate
 

@@ -19,7 +19,7 @@ export enum ReviewStatus {
 }
 
 export enum ReviewRecommendation {
-  AUTO_APPROVE = 'auto_approve',
+  ALL_CHECKS_PASSED = 'all_checks_passed',
   QUICK_REVIEW = 'quick_review',
   FULL_REVIEW = 'full_review',
   AUTO_REJECT = 'auto_reject',
@@ -95,7 +95,7 @@ export const REVIEW_CHECKS = {
 
 // Thresholds for recommendations
 export const REVIEW_THRESHOLDS = {
-  AUTO_APPROVE: 90,
+  ALL_CHECKS_PASSED: 90,
   QUICK_REVIEW: 70,
   FULL_REVIEW: 50,
   // Below 50 = AUTO_REJECT
@@ -117,14 +117,14 @@ export const REVIEW_STATUS_COLORS: Record<ReviewStatus, string> = {
 };
 
 export const RECOMMENDATION_LABELS: Record<ReviewRecommendation, string> = {
-  [ReviewRecommendation.AUTO_APPROVE]: 'Auto-Approve Candidate',
+  [ReviewRecommendation.ALL_CHECKS_PASSED]: 'All Checks Passed',
   [ReviewRecommendation.QUICK_REVIEW]: 'Quick Review',
   [ReviewRecommendation.FULL_REVIEW]: 'Full Review Required',
   [ReviewRecommendation.AUTO_REJECT]: 'Auto-Reject Candidate',
 };
 
 export const RECOMMENDATION_COLORS: Record<ReviewRecommendation, string> = {
-  [ReviewRecommendation.AUTO_APPROVE]: '#10b981',
+  [ReviewRecommendation.ALL_CHECKS_PASSED]: '#10b981',
   [ReviewRecommendation.QUICK_REVIEW]: '#3b82f6',
   [ReviewRecommendation.FULL_REVIEW]: '#f59e0b',
   [ReviewRecommendation.AUTO_REJECT]: '#ef4444',

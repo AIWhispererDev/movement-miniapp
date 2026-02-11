@@ -545,8 +545,8 @@ function determineRecommendation(score: number, flags: ReviewFlag[]): ReviewReco
   }
 
   // Score-based recommendations
-  if (score >= REVIEW_THRESHOLDS.AUTO_APPROVE && !flags.some(f => f.severity === 'warning')) {
-    return ReviewRecommendation.AUTO_APPROVE;
+  if (score >= REVIEW_THRESHOLDS.ALL_CHECKS_PASSED && !flags.some(f => f.severity === 'warning')) {
+    return ReviewRecommendation.ALL_CHECKS_PASSED;
   }
 
   if (score >= REVIEW_THRESHOLDS.QUICK_REVIEW) {

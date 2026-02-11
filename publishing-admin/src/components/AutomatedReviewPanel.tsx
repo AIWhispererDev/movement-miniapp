@@ -401,7 +401,7 @@ function FlagIcon({ severity }: { severity: string }) {
 
 function RecommendationIcon({ recommendation }: { recommendation: ReviewRecommendation }) {
   switch (recommendation) {
-    case ReviewRecommendation.AUTO_APPROVE:
+    case ReviewRecommendation.ALL_CHECKS_PASSED:
       return <span>&#10003;</span>;
     case ReviewRecommendation.QUICK_REVIEW:
       return <span>&#128269;</span>;
@@ -421,12 +421,12 @@ function getScoreColor(score: number): string {
 
 function getRecommendationDescription(recommendation: ReviewRecommendation): string {
   switch (recommendation) {
-    case ReviewRecommendation.AUTO_APPROVE:
-      return 'All automated checks passed. Safe to approve with minimal manual review.';
+    case ReviewRecommendation.ALL_CHECKS_PASSED:
+      return 'All automated checks passed. Complete the manual checklist to approve.';
     case ReviewRecommendation.QUICK_REVIEW:
-      return 'Most checks passed. Quick manual verification recommended before approval.';
+      return 'Most checks passed. Complete the manual checklist to approve.';
     case ReviewRecommendation.FULL_REVIEW:
-      return 'Some concerns detected. Full manual review required before making a decision.';
+      return 'Some concerns detected. Review carefully before approving.';
     case ReviewRecommendation.AUTO_REJECT:
       return 'Critical issues detected. Consider rejecting unless issues can be explained.';
   }
