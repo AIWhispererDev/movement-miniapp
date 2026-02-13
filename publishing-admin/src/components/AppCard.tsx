@@ -281,9 +281,10 @@ function AppDetailsModal({
   const [showRejectInput, setShowRejectInput] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
 
-  // For pending updates, review the NEW metadata; otherwise review the current app
-  const isReviewingUpdate = hasPendingUpdate && pendingChange;
-  const reviewApp = isReviewingUpdate ? pendingChange.new_metadata : app;
+  // Show "update review" UI (banner, Changed markers) only for approved apps with pending changes
+  const isReviewingUpdate = hasPendingUpdate && pendingChange && app.status === AppStatus.APPROVED;
+  // Always review the latest version (pending change if exists, otherwise current app)
+  const reviewApp = (hasPendingUpdate && pendingChange) ? pendingChange.new_metadata : app;
 
   const canApprove = reviewCompleted && checklistCompleted;
   const isImageIcon = /https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)(\?.*)?$/i.test(reviewApp.icon);
