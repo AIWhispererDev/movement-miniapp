@@ -182,7 +182,7 @@ export function AppCard({
               </button>
             )}
 
-            {isAdmin && hasPendingUpdate && app.app_id !== undefined && (
+            {isAdmin && hasPendingUpdate && app.status === AppStatus.APPROVED && app.app_id !== undefined && (
               <button
                 onClick={() => setShowDetails(true)}
                 disabled={isProcessing}
