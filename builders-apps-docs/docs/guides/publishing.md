@@ -68,7 +68,7 @@ Create a JSON file with your app details:
   "description": "A brief description of what your app does",
   "icon": "https://yourdomain.com/icon.png",
   "url": "https://yourdomain.com",
-  "category": "game",
+  "category": "games",
   "author": {
     "name": "Your Name",
     "wallet": "0x..."
@@ -107,12 +107,13 @@ Review typically takes **1-3 business days**.
 
 Choose the best category for your app:
 
-- **game** - Games and entertainment
-- **defi** - DeFi, trading, swaps
-- **nft** - NFT marketplaces and galleries
+- **games** - Games and entertainment
+- **earn** - Earning opportunities and rewards
 - **social** - Social and communication apps
+- **collect** - Collectibles and digital assets
+- **swap** - Token swaps and exchanges
 - **utility** - Tools and utilities
-- **productivity** - Productivity apps
+- **other** - Other (specify your own category, max 24 characters)
 
 ---
 

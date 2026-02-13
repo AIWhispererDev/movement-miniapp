@@ -8,7 +8,7 @@
       "description": "High-speed 3D racing game with blockchain rewards",
       "icon": "https://example.com/neon-racer/icon.png",
       "url": "https://neon-racer.vercel.app",
-      "category": "game",
+      "category": "games",
       "verified": true,
       "featured": true,
       "author": {
@@ -31,7 +31,7 @@
       "description": "Turn-based RPG with on-chain rewards and leveling",
       "icon": "https://example.com/rpg-battle/icon.png",
       "url": "https://rpg-battle.vercel.app",
-      "category": "game",
+      "category": "games",
       "verified": true,
       "featured": true,
       "author": {
@@ -50,7 +50,7 @@
       "description": "Fast and simple token swapping interface",
       "icon": "https://example.com/quick-swap/icon.png",
       "url": "https://quick-swap.vercel.app",
-      "category": "defi",
+      "category": "swap",
       "verified": true,
       "featured": false,
       "author": {
@@ -65,11 +65,12 @@
     }
   ],
   "categories": [
-    { "id": "game", "name": "Games", "icon": "🎮" },
-    { "id": "defi", "name": "DeFi", "icon": "💰" },
-    { "id": "nft", "name": "NFTs", "icon": "🖼️" },
+    { "id": "games", "name": "Games", "icon": "🎮" },
+    { "id": "earn", "name": "Earn", "icon": "💰" },
     { "id": "social", "name": "Social", "icon": "👥" },
-    { "id": "utility", "name": "Utilities", "icon": "🔧" },
-    { "id": "productivity", "name": "Productivity", "icon": "📊" }
+    { "id": "collect", "name": "Collect", "icon": "🖼️" },
+    { "id": "swap", "name": "Swap", "icon": "🔄" },
+    { "id": "utility", "name": "Utility", "icon": "🔧" },
+    { "id": "other", "name": "Other", "icon": "📦" }
   ]
 }

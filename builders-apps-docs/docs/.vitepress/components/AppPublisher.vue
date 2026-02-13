@@ -112,7 +112,8 @@ const appForm = ref({
   url: '',
   slug: '',
   developerName: '',
-  category: 'game',
+  category: 'games',
+  customCategory: '',
   language: 'all',
   permissions: []
 })
@@ -147,7 +148,25 @@ function isValidIconUrl(url: string): boolean {
   return /^https:\/\/.+\.(png|jpg)$/i.test(url || '')
 }
 
-const categories = ['game', 'defi', 'social', 'utility', 'nft']
+const categories = [
+  { value: 'games', label: 'Games' },
+  { value: 'earn', label: 'Earn' },
+  { value: 'social', label: 'Social' },
+  { value: 'collect', label: 'Collect' },
+  { value: 'swap', label: 'Swap' },
+  { value: 'utility', label: 'Utility' },
+  { value: 'other', label: 'Other' },
+]
+
+const MAX_CUSTOM_CATEGORY_LENGTH = 24
+
+// Get the actual category value to submit (custom text for "other")
+function getSubmitCategory(): string {
+  if (appForm.value.category === 'other') {
+    return appForm.value.customCategory.trim() || 'other'
+  }
+  return appForm.value.category
+}
 
 // ISO 639-1 language codes with display names (sorted alphabetically after "All")
 const languages = [
@@ -512,6 +531,8 @@ async function loadAllActiveApps() {
 // Edit app - populate form with existing app data
 function editApp(appIndex: number, app: any) {
   editingAppIndex.value = appIndex
+  const appCategory = app.category || 'games'
+  const isKnownCategory = categories.some(c => c.value === appCategory)
   appForm.value = {
     name: app.name || '',
     description: app.description || '',
@@ -519,7 +540,8 @@ function editApp(appIndex: number, app: any) {
     url: app.url || '',
     slug: app.slug || '', // Slug cannot be changed
     developerName: app.developer_name || '',
-    category: app.category || 'game',
+    category: isKnownCategory ? appCategory : 'other',
+    customCategory: isKnownCategory ? '' : appCategory,
     language: app.language || 'all',
     permissions: app.permissions || []
   }
@@ -537,7 +559,8 @@ function cancelEdit() {
     url: '',
     slug: '',
     developerName: '',
-    category: 'game',
+    category: 'games',
+    customCategory: '',
     language: 'all',
     permissions: []
   }
@@ -651,7 +674,7 @@ async function submitApp() {
             appForm.value.url,
             appForm.value.slug,
             appForm.value.developerName,
-            appForm.value.category,
+            getSubmitCategory(),
             appForm.value.language,
             appForm.value.permissions
           ],
@@ -786,7 +809,7 @@ async function requestUpdateApp(appIndex: number) {
             appForm.value.description,
             appForm.value.icon,
             appForm.value.url,
-            appForm.value.category,
+            getSubmitCategory(),
             appForm.value.language,
             appForm.value.permissions
           ],
@@ -1134,8 +1157,20 @@ onMounted(() => {
         <div class="form-group">
           <label>Category *</label>
           <select v-model="appForm.category" required>
-            <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+            <option v-for="cat in categories" :key="cat.value" :value="cat.value">{{ cat.label }}</option>
           </select>
+        </div>
+
+        <div class="form-group" v-if="appForm.category === 'other'">
+          <label>Custom Category *</label>
+          <input
+            v-model="appForm.customCategory"
+            type="text"
+            placeholder="Enter your category (e.g., education, health)"
+            :maxlength="MAX_CUSTOM_CATEGORY_LENGTH"
+            required
+          />
+          <small>{{ appForm.customCategory.length }}/{{ MAX_CUSTOM_CATEGORY_LENGTH }} characters</small>
         </div>
 
         <div class="form-group">

@@ -38,7 +38,7 @@ When viewing a pending app, click **"Run Checks"** in the Automated Review panel
 The review panel includes an **interactive checklist** that adapts based on the app's category and permissions. Expand the "Manual Review Checklist" section to see and check off items.
 
 **How it works:**
-- Checklist items are generated based on the app's category (DeFi, Game, NFT, etc.) and requested permissions
+- Checklist items are generated based on the app's category (Games, Earn, Collect, etc.) and requested permissions
 - Required items are marked with a red asterisk (*)
 - Check off items as you verify them
 - A progress indicator shows how many required items are complete
@@ -50,8 +50,9 @@ The review panel includes an **interactive checklist** that adapts based on the 
 |-----------|----------------------|
 | All apps | App loads, functionality works, matches description |
 | Requests `sign_transaction` | Transaction requests legitimate, amounts reasonable |
-| DeFi category | No rug indicators, clear signing UI |
-| Game category | Game playable, no hidden fees |
+| Earn/Swap category | No rug indicators, clear signing UI |
+| Games category | Game playable, no hidden fees |
+| Collect category | Collection/marketplace is legitimate |
 | Camera/location permission | Sensitive permissions justified |
 
 The checklist state is per-session (resets when you close the modal), so use it as a guide while reviewing.
@@ -92,7 +93,7 @@ Target: Review all submissions within 1-2 business days.
 
 Contact the team lead if:
 - App requests unusual contract interactions
-- You're unsure about a DeFi protocol's legitimacy
+- You're unsure about a protocol's legitimacy
 - Developer disputes a rejection
 - You suspect a coordinated attack (multiple similar submissions)
 

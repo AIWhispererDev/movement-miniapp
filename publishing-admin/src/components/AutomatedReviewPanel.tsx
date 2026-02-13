@@ -42,24 +42,24 @@ function getManualChecklistItems(app: AppMetadata): ChecklistItem[] {
     );
   }
 
-  // Category-specific checks
-  if (app.category === 'defi') {
+  // Category-specific checks (including legacy category values)
+  if (['earn', 'swap', 'defi'].includes(app.category)) {
     items.push(
       { id: 'no_rug_indicators', label: 'No suspicious token approvals or drain patterns', required: true },
       { id: 'clear_tx_ui', label: 'Users can understand what they are signing', required: true },
     );
   }
 
-  if (app.category === 'game') {
+  if (['games', 'game'].includes(app.category)) {
     items.push(
       { id: 'game_playable', label: 'Game is actually playable', required: true },
       { id: 'no_hidden_fees', label: 'No hidden fees or costs', required: false },
     );
   }
 
-  if (app.category === 'nft') {
+  if (['collect', 'nft'].includes(app.category)) {
     items.push(
-      { id: 'nft_legitimate', label: 'NFT collection/marketplace is legitimate', required: true },
+      { id: 'nft_legitimate', label: 'Collection/marketplace is legitimate', required: true },
     );
   }
 

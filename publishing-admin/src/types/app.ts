@@ -44,11 +44,18 @@ export const APP_STATUS_COLORS: Record<AppStatus, string> = {
 };
 
 export const CATEGORY_LABELS: Record<string, string> = {
-  game: 'Games',
-  defi: 'DeFi',
+  // New categories
+  games: 'Games',
+  earn: 'Earn',
   social: 'Social',
+  collect: 'Collect',
+  swap: 'Swap',
   utility: 'Utility',
-  nft: 'NFT',
+  other: 'Other',
+  // Legacy mappings (for old apps)
+  game: 'Games',
+  defi: 'Earn',
+  nft: 'Collect',
 };
 
 export const LANGUAGE_LABELS: Record<string, string> = {

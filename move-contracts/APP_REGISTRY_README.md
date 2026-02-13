@@ -33,7 +33,7 @@ struct AppMetadata {
     slug: String,
     developer_address: address,
     developer_name: String,
-    category: String,  // "game", "defi", "social", "utility", "nft"
+    category: String,  // "games", "earn", "social", "collect", "swap", "utility", "other"
     status: u8,  // 0=Pending, 1=Approved, 2=Rejected
     submitted_at: u64,
     updated_at: u64,
@@ -113,13 +113,13 @@ movement move run \
 ```bash
 movement move run \
   --function-id '@app_registry::app_registry::submit_app' \
-  --args string:"My DeFi App" \
-         string:"Best DeFi app on Movement" \
-         string:"💰" \
+  --args string:"My Swap App" \
+         string:"Best swap app on Movement" \
+         string:"🔄" \
          string:"https://my-app.com" \
-         string:"my-defi-app" \
+         string:"my-swap-app" \
          string:"My Team" \
-         string:"defi" \
+         string:"swap" \
          'vector<string>:["wallet.read","wallet.sign"]' \
   --network custom \
   --url https://testnet.movementnetwork.xyz/v1
@@ -145,11 +145,11 @@ movement move run \
 movement move run \
   --function-id '@app_registry::app_registry::request_update' \
   --args u64:APP_INDEX \
-         string:"My DeFi App v2" \
+         string:"My Swap App v2" \
          string:"Updated description" \
-         string:"💰" \
+         string:"🔄" \
          string:"https://my-app.com" \
-         string:"defi" \
+         string:"swap" \
          'vector<string>:["wallet.read","wallet.sign"]' \
   --network custom \
   --url https://testnet.movementnetwork.xyz/v1

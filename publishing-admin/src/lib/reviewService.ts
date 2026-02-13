@@ -10,10 +10,17 @@ import { AppMetadata } from '@/types/app';
 
 // Permission expectations by category
 const EXPECTED_PERMISSIONS: Record<string, string[]> = {
+  // New categories
+  games: ['wallet_read', 'storage_read', 'storage_write'],
+  earn: ['wallet_read', 'sign_transaction'],
+  social: ['wallet_read', 'storage_read', 'storage_write'],
+  collect: ['wallet_read', 'sign_transaction'],
+  swap: ['wallet_read', 'sign_transaction'],
+  utility: ['wallet_read', 'storage_read'],
+  other: ['wallet_read'],
+  // Legacy mappings (for old apps)
   game: ['wallet_read', 'storage_read', 'storage_write'],
   defi: ['wallet_read', 'sign_transaction'],
-  social: ['wallet_read', 'storage_read', 'storage_write'],
-  utility: ['wallet_read', 'storage_read'],
   nft: ['wallet_read', 'sign_transaction'],
 };
 

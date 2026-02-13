@@ -42,20 +42,22 @@ When submitting your app, you'll provide the following metadata:
 | `description` | String | Brief description (max 200 chars) | `"Track your DeFi portfolio"` |
 | `icon` | String | Icon URL (HTTPS .png or .jpg) | `"https://yourdomain.com/icon.png"` |
 | `url` | String | App URL (HTTPS required) | `"https://app.example.com"` |
-| `slug` | String | URL-friendly identifier (lowercase, numbers, hyphens) | `"defi-dashboard"` |
+| `slug` | String | URL-friendly identifier (lowercase, numbers, hyphens) | `"my-rewards-app"` |
 | `developer_name` | String | Your name or organization | `"Acme Labs"` |
-| `category` | String | App category | `"defi"` |
+| `category` | String | App category | `"earn"` |
 | `permissions` | Array&lt;String&gt; | Requested permissions | `["wallet_read", "sign_transaction"]` |
 
 ### Categories
 
 Choose one category for your app:
 
-- `game` - Games and entertainment
-- `defi` - DeFi protocols and tools
+- `games` - Games and entertainment
+- `earn` - Earning opportunities and rewards
 - `social` - Social and communication apps
+- `collect` - Collectibles and digital assets
+- `swap` - Token swaps and exchanges
 - `utility` - Productivity and utility tools
-- `nft` - NFT marketplaces and tools
+- `other` - Other (specify your own category, max 24 characters)
 
 ### Permissions
 
@@ -178,13 +180,13 @@ async function submitApp() {
     data: {
       function: `${REGISTRY_ADDRESS}::app_registry::submit_app`,
       functionArguments: [
-        "My DeFi App",              // name
-        "Track your DeFi portfolio", // description
+        "My Rewards App",           // name
+        "Track your rewards and earnings", // description
         "https://yourdomain.com/icon.png", // icon (.png or .jpg over HTTPS)
         "https://myapp.com",        // url
-        "my-defi-app",              // slug (URL-friendly identifier)
+        "my-rewards-app",           // slug (URL-friendly identifier)
         "Acme Labs",                // developer_name
-        "defi",                     // category
+        "earn",                     // category
         ["wallet_read", "sign_transaction"] // permissions
       ],
     },
@@ -205,13 +207,13 @@ async function submitApp() {
 aptos move run \
   --function-id '@app_registry::app_registry::submit_app' \
   --args \
-    string:"My DeFi App" \
-    string:"Track your DeFi portfolio" \
+    string:"My Rewards App" \
+    string:"Track your rewards and earnings" \
     string:"https://yourdomain.com/icon.png" \  # .png or .jpg
     string:"https://myapp.com" \
-    string:"my-defi-app" \
+    string:"my-rewards-app" \
     string:"Acme Labs" \
-    string:"defi" \
+    string:"earn" \
     'vector&lt;string&gt;:["wallet_read","sign_transaction"]'
 ```
 
@@ -236,7 +238,7 @@ console.log('Status:', app.status); // 0=Pending, 1=Approved, 2=Rejected
 const appBySlug = await aptos.view({
   payload: {
     function: `${REGISTRY_ADDRESS}::app_registry::get_app_by_slug`,
-    functionArguments: ["my-defi-app"], // slug string
+    functionArguments: ["my-rewards-app"], // slug string
   },
 });
 ```
@@ -275,11 +277,11 @@ async function requestUpdate(appIndex: number) {
       function: `${REGISTRY_ADDRESS}::app_registry::request_update`,
       functionArguments: [
         appIndex,                      // u64 app_index
-        "My DeFi App v2",              // updated name
+        "My Rewards App v2",           // updated name
         "New features and improvements", // updated description
         "https://yourdomain.com/icon.png", // icon (.png or .jpg over HTTPS)
         "https://myapp.com",            // url
-        "defi",                         // category
+        "earn",                         // category
         ["wallet_read", "sign_transaction", "storage_write"] // updated permissions
       ],
     },

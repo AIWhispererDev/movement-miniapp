@@ -97,20 +97,20 @@ movement move run \
     string:"🎮" \
     string:"https://testgame.com" \
     string:"Test Dev" \
-    string:"game" \
+    string:"games" \
     'vector<string>:["wallet.read"]'
 
-# Submit DeFi app
+# Submit Swap app
 movement move run \
   --function-id '0x...::app_registry::submit_app' \
   --args \
     address:0x... \
-    string:"Test DeFi" \
-    string:"A test DeFi app" \
-    string:"💰" \
-    string:"https://testdefi.com" \
+    string:"Test Swap" \
+    string:"A test swap app" \
+    string:"🔄" \
+    string:"https://testswap.com" \
     string:"Test Dev" \
-    string:"defi" \
+    string:"swap" \
     'vector<string>:["wallet.read","wallet.sign"]'
 ```
 
@@ -135,12 +135,12 @@ movement move view \
 # Get games
 movement move view \
   --function-id '0x...::app_registry::get_apps_by_category' \
-  --args address:0x... string:"game"
+  --args address:0x... string:"games"
 
-# Get DeFi apps
+# Get swap apps
 movement move view \
   --function-id '0x...::app_registry::get_apps_by_category' \
-  --args address:0x... string:"defi"
+  --args address:0x... string:"swap"
 
 # Get paginated (first 5)
 movement move view \
