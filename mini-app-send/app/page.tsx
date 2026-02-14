@@ -381,11 +381,25 @@ export default function SendTokensPage() {
   };
 
   const handleCopyAddress = async () => {
-    if (!resolvedAddress || !sdk?.clipboard) return;
+    if (!resolvedAddress) return;
 
     try {
-      await sdk.clipboard.copy(resolvedAddress);
-      await sdk.haptic?.({ type: 'impact', style: 'light' });
+      // Try SDK clipboard first (for native apps)
+      if (sdk && (sdk as any).Clipboard?.writeText) {
+        await (sdk as any).Clipboard.writeText(resolvedAddress);
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        // Fallback to browser clipboard API
+        await navigator.clipboard.writeText(resolvedAddress);
+      } else {
+        console.error('[Send App] No clipboard API available');
+        return;
+      }
+
+      await sdk?.haptic?.({ type: 'impact', style: 'light' });
+      await sdk?.notify?.({
+        title: 'Address Copied!',
+        body: 'The resolved address has been copied to your clipboard'
+      });
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     } catch (error) {
@@ -631,7 +645,7 @@ export default function SendTokensPage() {
                       <button
                         onClick={handleCopyAddress}
                         className="p-1 rounded hover:bg-opacity-10 transition-colors"
-                        style={{ color: isCopied ? theme.success.text : theme.text.secondary }}
+                        style={{ color: theme.success.text }}
                         title={isCopied ? 'Copied!' : 'Copy address'}
                       >
                         {isCopied ? (
