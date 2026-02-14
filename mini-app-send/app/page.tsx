@@ -77,6 +77,7 @@ export default function SendTokensPage() {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
   const [network, setNetwork] = useState<string | null>(null);  // Start as null until SDK provides it
+  const [isCopied, setIsCopied] = useState(false);
 
   // Theme colors
   const theme = {
@@ -379,6 +380,19 @@ export default function SendTokensPage() {
     setImageErrors(prev => new Set(prev).add(iconUrl));
   };
 
+  const handleCopyAddress = async () => {
+    if (!resolvedAddress || !sdk?.clipboard) return;
+
+    try {
+      await sdk.clipboard.copy(resolvedAddress);
+      await sdk.haptic?.({ type: 'impact', style: 'light' });
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (error) {
+      console.error('[Send App] Copy error:', error);
+    }
+  };
+
   const renderTokenIcon = (token: typeof TOKENS[0], size: string = 'w-10 h-10') => {
     const isUrl = token.icon.startsWith('http') || token.icon.startsWith('/');
     const hasError = imageErrors.has(token.icon);
@@ -610,9 +624,27 @@ export default function SendTokensPage() {
                       {nameResolutionError}
                     </span>
                   ) : resolvedAddress ? (
-                    <span style={{ color: theme.success.text }}>
-                      → {resolvedAddress.slice(0, 10)}...{resolvedAddress.slice(-6)}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span style={{ color: theme.success.text }}>
+                        → {resolvedAddress.slice(0, 10)}...{resolvedAddress.slice(-6)}
+                      </span>
+                      <button
+                        onClick={handleCopyAddress}
+                        className="p-1 rounded hover:bg-opacity-10 transition-colors"
+                        style={{ color: isCopied ? theme.success.text : theme.text.secondary }}
+                        title={isCopied ? 'Copied!' : 'Copy address'}
+                      >
+                        {isCopied ? (
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
                   ) : null}
                 </div>
               )}
