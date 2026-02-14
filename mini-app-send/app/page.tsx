@@ -123,9 +123,10 @@ export default function SendTokensPage() {
     return input.endsWith('.move') || !input.startsWith('0x');
   };
 
-  // Normalize MNS name (remove .move suffix if present)
+  // Normalize MNS name (remove .move suffix if present and lowercase)
   const normalizeMNSName = (name: string): string => {
-    return name.endsWith('.move') ? name.slice(0, -5) : name;
+    const lowered = name.toLowerCase();
+    return lowered.endsWith('.move') ? lowered.slice(0, -5) : lowered;
   };
 
   // Resolve MNS name to address
@@ -156,7 +157,7 @@ export default function SendTokensPage() {
           setNameResolutionError(null);
         } else {
           setResolvedAddress(null);
-          setNameResolutionError(`Name "${recipientInput}" not found`);
+          setNameResolutionError(`Name "${normalizedName}.move" not found`);
         }
       } catch (error: any) {
         console.error('[Send App] MNS resolution error:', error);
@@ -553,6 +554,10 @@ export default function SendTokensPage() {
                   value={recipientInput}
                   onChange={(e) => setRecipientInput(e.target.value)}
                   placeholder="0x... or name.move"
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  autoComplete="off"
+                  spellCheck={false}
                   className="w-full px-4 py-3 pr-12 border rounded-xl text-base font-mono focus:outline-none focus:ring-2 focus:border-transparent"
                   style={{
                     backgroundColor: theme.bg.tertiary,
