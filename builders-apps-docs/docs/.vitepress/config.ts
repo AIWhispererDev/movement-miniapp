@@ -100,6 +100,10 @@ const result = await sdk.sendTransaction({
 - \`sdk.address\` - Connected wallet address
 - \`sdk.getBalance()\` - Get MOVE balance
 
+### MNS (Movement Name Service)
+- \`sdk.mns.getTargetAddress(name)\` - Resolve .move name to wallet address
+- \`sdk.mns.getPrimaryName(address)\` - Get primary .move name for a wallet address (reverse lookup)
+
 ### Device Features
 - \`sdk.scanQRCode()\` - Open camera to scan QR
 - \`sdk.haptic({ type, style })\` - Tactile feedback (impact/notification/selection)
@@ -151,6 +155,22 @@ try {
 \`\`\`typescript
 function: 'address::module::function'
 // Example: '0x1::aptos_account::transfer'
+\`\`\`
+
+### MNS name resolution
+\`\`\`typescript
+// Resolve .move name to address (returns AccountAddress object)
+const result = await sdk.mns.getTargetAddress('alice.move');
+
+// Convert AccountAddress to hex string
+if (result && typeof result === 'object' && 'data' in result) {
+  const bytes = Object.values(result.data);
+  const address = '0x' + bytes.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Reverse lookup: get name for address
+const name = await sdk.mns.getPrimaryName('0x742d35Cc...');
+// Returns: 'alice' or null
 \`\`\`
 
 ## Rate Limits

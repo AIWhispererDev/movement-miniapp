@@ -464,6 +464,77 @@ console.log('Signature:', result.signature);
 
 ---
 
+## MNS (Movement Name Service)
+
+The MNS API allows you to resolve human-readable `.move` names to wallet addresses and perform reverse lookups.
+
+### `mns.getTargetAddress()`
+
+Resolve a `.move` name to its associated wallet address.
+
+**Parameters:** `name: string` - The name to resolve (e.g., "alice" or "alice.move")
+
+**Returns:** `Promise<AccountAddress | null>` - An AccountAddress object or null if not found
+
+The result is an `AccountAddress` object from the Movement SDK, which may need to be converted to a hex string:
+
+**Example:**
+
+```typescript
+const result = await sdk.mns.getTargetAddress('alice.move');
+
+if (!result) {
+  console.log('Name not found');
+  return;
+}
+
+// Handle AccountAddress object - convert to hex string
+let address: string | null = null;
+
+if (typeof result === 'string') {
+  address = result;
+} else if (result && typeof result === 'object' && 'data' in result) {
+  // Convert byte array to hex address
+  const data = (result as any).data;
+  const bytes = Object.keys(data)
+    .sort((a, b) => Number(a) - Number(b))
+    .map(k => data[k]);
+
+  if (bytes.length > 0 && bytes.some((b: number) => b !== 0)) {
+    address = '0x' + bytes.map((b: number) => b.toString(16).padStart(2, '0')).join('');
+  }
+}
+
+console.log('Resolved address:', address);
+```
+
+---
+
+### `mns.getPrimaryName()`
+
+Get the primary `.move` name associated with a wallet address (reverse lookup).
+
+**Parameters:** `address: string`
+
+**Returns:** `Promise<string | null>`
+
+**Example:**
+
+```typescript
+const name = await sdk.mns.getPrimaryName('0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb...');
+console.log('Name:', name);
+// alice
+```
+
+---
+
+**Use Cases:**
+- Allow users to send tokens to `.move` names instead of addresses
+- Display human-readable names in transaction history
+- Verify name ownership before transfers
+
+---
+
 ## Device Features
 
 ### `scanQRCode()`
@@ -1475,7 +1546,8 @@ import type {
   FeePayerTransactionPayload,
   BatchTransactionPayload,
   BatchTransactionResult,
-  ScriptComposerPayload
+  ScriptComposerPayload,
+  MNSAPI
 } from '@movement-labs/miniapp-sdk';
 ```
 

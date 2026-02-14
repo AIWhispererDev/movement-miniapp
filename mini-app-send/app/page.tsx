@@ -152,15 +152,12 @@ export default function SendTokensPage() {
         const normalizedName = normalizeMNSName(recipientInput);
         const result = await sdk.mns.getTargetAddress(normalizedName);
 
-        // Handle result - SDK returns byte array in data property
+        // Handle result - SDK returns AccountAddress with byte array in data property
         let address: string | null = null;
 
-        if (typeof result === 'string') {
-          address = result;
-        } else if (result && typeof result === 'object' && 'data' in result) {
+        if (result && 'data' in result) {
           // Convert byte array to hex address
-          const data = (result as any).data;
-          const bytes = Object.keys(data).sort((a, b) => Number(a) - Number(b)).map(k => data[k]);
+          const bytes = Object.keys(result.data).sort((a, b) => Number(a) - Number(b)).map(k => result.data[k]);
           if (bytes.length > 0 && bytes.some((b: number) => b !== 0)) {
             address = '0x' + bytes.map((b: number) => b.toString(16).padStart(2, '0')).join('');
           }
