@@ -151,14 +151,22 @@ export default function SendTokensPage() {
       try {
         const normalizedName = normalizeMNSName(recipientInput);
         const result = await sdk.mns.getTargetAddress(normalizedName);
-        console.log('[Send App] MNS result:', result, typeof result);
 
-        // Handle result - ensure it's a string
-        const address = typeof result === 'string' ? result :
-                        (result && typeof result === 'object' && 'address' in result) ? (result as any).address :
-                        null;
+        // Handle result - SDK returns byte array in data property
+        let address: string | null = null;
 
-        if (address && typeof address === 'string') {
+        if (typeof result === 'string') {
+          address = result;
+        } else if (result && typeof result === 'object' && 'data' in result) {
+          // Convert byte array to hex address
+          const data = (result as any).data;
+          const bytes = Object.keys(data).sort((a, b) => Number(a) - Number(b)).map(k => data[k]);
+          if (bytes.length > 0 && bytes.some((b: number) => b !== 0)) {
+            address = '0x' + bytes.map((b: number) => b.toString(16).padStart(2, '0')).join('');
+          }
+        }
+
+        if (address) {
           setResolvedAddress(address);
           setNameResolutionError(null);
         } else {
