@@ -64,7 +64,10 @@ export default function SendTokensPage() {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0]);
   const [assetBalance, setAssetBalance] = useState<string>('0');
   const [isLoadingBalance, setIsLoadingBalance] = useState(false);
-  const [recipientAddress, setRecipientAddress] = useState('');
+  const [recipientInput, setRecipientInput] = useState('');
+  const [resolvedAddress, setResolvedAddress] = useState<string | null>(null);
+  const [isResolvingName, setIsResolvingName] = useState(false);
+  const [nameResolutionError, setNameResolutionError] = useState<string | null>(null);
   const [amount, setAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
@@ -110,6 +113,64 @@ export default function SendTokensPage() {
       textSecondary: isDarkMode ? '#FCA5A5' : '#7F1D1D',
     },
   };
+
+  // Helper to detect if input is an MNS name vs address
+  const isMNSName = (input: string): boolean => {
+    if (!input) return false;
+    // If it starts with 0x and is 64+ chars, it's likely an address
+    if (input.startsWith('0x') && input.length >= 64) return false;
+    // If it ends with .move or doesn't start with 0x, treat as name
+    return input.endsWith('.move') || !input.startsWith('0x');
+  };
+
+  // Normalize MNS name (remove .move suffix if present)
+  const normalizeMNSName = (name: string): string => {
+    return name.endsWith('.move') ? name.slice(0, -5) : name;
+  };
+
+  // Resolve MNS name to address
+  useEffect(() => {
+    const resolveName = async () => {
+      if (!recipientInput || !sdk?.mns) {
+        setResolvedAddress(null);
+        setNameResolutionError(null);
+        return;
+      }
+
+      if (!isMNSName(recipientInput)) {
+        // It's already an address
+        setResolvedAddress(recipientInput);
+        setNameResolutionError(null);
+        return;
+      }
+
+      setIsResolvingName(true);
+      setNameResolutionError(null);
+
+      try {
+        const normalizedName = normalizeMNSName(recipientInput);
+        const address = await sdk.mns.getTargetAddress(normalizedName);
+
+        if (address) {
+          setResolvedAddress(address);
+          setNameResolutionError(null);
+        } else {
+          setResolvedAddress(null);
+          setNameResolutionError(`Name "${recipientInput}" not found`);
+        }
+      } catch (error: any) {
+        console.error('[Send App] MNS resolution error:', error);
+        setResolvedAddress(null);
+        setNameResolutionError('Failed to resolve name');
+      } finally {
+        setIsResolvingName(false);
+      }
+    };
+
+    // Debounce the resolution
+    const timeoutId = setTimeout(resolveName, 300);
+    return () => clearTimeout(timeoutId);
+  }, [recipientInput, sdk]);
 
   // Fetch theme from SDK
   useEffect(() => {
@@ -209,9 +270,15 @@ export default function SendTokensPage() {
       return;
     }
 
-    if (!recipientAddress || !amount) {
+    if (!recipientInput || !amount) {
       setStatus('error');
       setErrorMessage('Please enter recipient and amount');
+      return;
+    }
+
+    if (!resolvedAddress) {
+      setStatus('error');
+      setErrorMessage(nameResolutionError || 'Invalid recipient address');
       return;
     }
 
@@ -229,14 +296,14 @@ export default function SendTokensPage() {
 
       const amountInUnits = Math.floor(amountNum * Math.pow(10, selectedToken.decimals)).toString();
 
-      console.log('[Send App] Sending transaction...');
+      console.log('[Send App] Sending transaction to:', resolvedAddress);
 
       const result = await sendTransaction({
         function: selectedToken.transferFunction,
         type_arguments: selectedToken.transferFunction === '0x1::coin::transfer' ? [selectedToken.coinType] : [],
-        arguments: [recipientAddress, amountInUnits],
+        arguments: [resolvedAddress, amountInUnits],
         title: `Send ${selectedToken.symbol}`,
-        description: `Send ${amount} ${selectedToken.symbol}`,
+        description: `Send ${amount} ${selectedToken.symbol}${isMNSName(recipientInput) ? ` to ${recipientInput}` : ''}`,
       });
 
       console.log('[Send App] Transaction result:', result);
@@ -254,7 +321,8 @@ export default function SendTokensPage() {
 
       // Clear form
       setTimeout(() => {
-        setRecipientAddress('');
+        setRecipientInput('');
+        setResolvedAddress(null);
         setAmount('');
         setStatus('idle');
       }, 3000);
@@ -284,7 +352,7 @@ export default function SendTokensPage() {
       console.log('[Send App] Scanned:', scannedData);
 
       if (scannedData) {
-        setRecipientAddress(scannedData);
+        setRecipientInput(scannedData);
         await sdk.haptic?.({ type: 'impact', style: 'light' });
       }
     } catch (error: any) {
@@ -477,18 +545,18 @@ export default function SendTokensPage() {
             {/* Recipient Input */}
             <div className="mb-5">
               <label className="block text-sm font-semibold mb-2" style={{ color: theme.text.primary }}>
-                Recipient Address
+                Recipient (Address or .move Name)
               </label>
               <div className="relative">
                 <input
                   type="text"
-                  value={recipientAddress}
-                  onChange={(e) => setRecipientAddress(e.target.value)}
-                  placeholder="0x..."
+                  value={recipientInput}
+                  onChange={(e) => setRecipientInput(e.target.value)}
+                  placeholder="0x... or name.move"
                   className="w-full px-4 py-3 pr-12 border rounded-xl text-base font-mono focus:outline-none focus:ring-2 focus:border-transparent"
                   style={{
                     backgroundColor: theme.bg.tertiary,
-                    borderColor: theme.border.default,
+                    borderColor: nameResolutionError ? theme.error.border : theme.border.default,
                     color: theme.text.primary,
                   }}
                   onFocus={(e) => {
@@ -496,7 +564,7 @@ export default function SendTokensPage() {
                     e.currentTarget.style.boxShadow = `0 0 0 2px ${theme.border.focus}40`;
                   }}
                   onBlur={(e) => {
-                    e.currentTarget.style.borderColor = theme.border.default;
+                    e.currentTarget.style.borderColor = nameResolutionError ? theme.error.border : theme.border.default;
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 />
@@ -513,6 +581,25 @@ export default function SendTokensPage() {
                   </svg>
                 </button>
               </div>
+
+              {/* Name Resolution Status */}
+              {recipientInput && isMNSName(recipientInput) && (
+                <div className="mt-2 text-xs">
+                  {isResolvingName ? (
+                    <span style={{ color: theme.text.secondary }}>
+                      Resolving name...
+                    </span>
+                  ) : nameResolutionError ? (
+                    <span style={{ color: theme.error.text }}>
+                      {nameResolutionError}
+                    </span>
+                  ) : resolvedAddress ? (
+                    <span style={{ color: theme.success.text }}>
+                      → {resolvedAddress.slice(0, 10)}...{resolvedAddress.slice(-6)}
+                    </span>
+                  ) : null}
+                </div>
+              )}
             </div>
 
             {/* Amount Input */}
@@ -617,8 +704,8 @@ export default function SendTokensPage() {
           <div className="text-sm leading-5 space-y-1" style={{ color: theme.text.secondary }}>
             <p>• Instant transfers on Movement network</p>
             <p>• Low gas fees (~0.0001 MOVE)</p>
-            <p>• Secure and irreversible</p>
-            <p>• Double-check recipient address</p>
+            <p>• Send to addresses or .move names</p>
+            <p>• Double-check recipient before sending</p>
           </div>
         </div>
 
