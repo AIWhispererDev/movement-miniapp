@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@movement-labs/miniapp-sdk':
         specifier: github:MoveIndustries/mini-app-sdk
-        version: git+https://git@github.com:MoveIndustries/mini-app-sdk.git#69ad41caefbf051b0896ab983b2e87c7ee5b44b1(react@19.2.3)
+        version: https://codeload.github.com/MoveIndustries/mini-app-sdk/tar.gz/cbd7b24f5a6648f18ddc3d2929f456d29395af49(react@19.2.3)
       '@tailwindcss/postcss':
         specifier: ^4.1.13
         version: 4.1.18
@@ -204,9 +204,9 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@movement-labs/miniapp-sdk@git+https://git@github.com:MoveIndustries/mini-app-sdk.git#69ad41caefbf051b0896ab983b2e87c7ee5b44b1':
-    resolution: {commit: 69ad41caefbf051b0896ab983b2e87c7ee5b44b1, repo: git@github.com:MoveIndustries/mini-app-sdk.git, type: git}
-    version: 0.5.0
+  '@movement-labs/miniapp-sdk@https://codeload.github.com/MoveIndustries/mini-app-sdk/tar.gz/cbd7b24f5a6648f18ddc3d2929f456d29395af49':
+    resolution: {tarball: https://codeload.github.com/MoveIndustries/mini-app-sdk/tar.gz/cbd7b24f5a6648f18ddc3d2929f456d29395af49}
+    version: 0.6.0
     peerDependencies:
       react: '>=18.0.0'
     peerDependenciesMeta:
@@ -714,7 +714,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@movement-labs/miniapp-sdk@git+https://git@github.com:MoveIndustries/mini-app-sdk.git#69ad41caefbf051b0896ab983b2e87c7ee5b44b1(react@19.2.3)':
+  '@movement-labs/miniapp-sdk@https://codeload.github.com/MoveIndustries/mini-app-sdk/tar.gz/cbd7b24f5a6648f18ddc3d2929f456d29395af49(react@19.2.3)':
     optionalDependencies:
       react: 19.2.3
 
