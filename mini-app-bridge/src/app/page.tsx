@@ -396,7 +396,7 @@ export default function BridgePage() {
                       <span className="text-gray-500">...</span>
                     ) : (
                       <span className="text-white font-semibold">
-                        {parseFloat(assetBalance || '0').toFixed(4)} {selectedAsset.symbol}
+                        {(Math.floor(parseFloat(assetBalance || '0') * 10000) / 10000).toFixed(4)} {selectedAsset.symbol}
                       </span>
                     )}
                   </div>

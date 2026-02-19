@@ -68,7 +68,9 @@ export function RestakeModal({ isOpen, onClose, stake, onSuccess }: RestakeModal
 
   const setPercentage = (percent: number) => {
     const value = (pendingAmount * percent) / 100;
-    setAmount(value.toFixed(4));
+    // Truncate to 4 decimals (don't round)
+    const truncated = Math.floor(value * 10000) / 10000;
+    setAmount(truncated.toFixed(4));
   };
 
   return (

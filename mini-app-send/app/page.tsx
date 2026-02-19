@@ -353,7 +353,9 @@ export default function SendTokensPage() {
     const maxAmount = selectedToken.symbol === 'MOVE'
       ? Math.max(0, parseFloat(assetBalance) - 0.001)
       : parseFloat(assetBalance);
-    setAmount(maxAmount.toFixed(4));
+    // Truncate to 4 decimals (don't round)
+    const truncated = Math.floor(maxAmount * 10000) / 10000;
+    setAmount(truncated.toFixed(4));
   };
 
   const handleScanQR = async () => {
@@ -554,7 +556,7 @@ export default function SendTokensPage() {
                       <span style={{ color: theme.text.tertiary }}>...</span>
                     ) : (
                       <span className="font-semibold" style={{ color: theme.text.primary }}>
-                        {parseFloat(assetBalance || '0').toFixed(4)} {selectedToken.symbol}
+                        {(Math.floor(parseFloat(assetBalance || '0') * 10000) / 10000).toFixed(4)} {selectedToken.symbol}
                       </span>
                     )}
                   </div>
