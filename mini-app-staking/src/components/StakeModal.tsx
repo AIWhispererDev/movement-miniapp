@@ -71,7 +71,7 @@ export function StakeModal({ isOpen, onClose, validator, onSuccess }: StakeModal
     // Leave some for gas if staking max
     const adjusted = percent === 100 ? Math.max(0, value - 0.01) : value;
     // Truncate to 4 decimals (don't round)
-    const truncated = Math.floor(adjusted * 10000) / 10000;
+    const truncated = Math.trunc(adjusted * 10000) / 10000;
     setAmount(truncated.toFixed(4));
   };
 

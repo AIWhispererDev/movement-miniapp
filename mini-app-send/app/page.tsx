@@ -354,7 +354,7 @@ export default function SendTokensPage() {
       ? Math.max(0, parseFloat(assetBalance) - 0.001)
       : parseFloat(assetBalance);
     // Truncate to 4 decimals (don't round)
-    const truncated = Math.floor(maxAmount * 10000) / 10000;
+    const truncated = Math.trunc(maxAmount * 10000) / 10000;
     setAmount(truncated.toFixed(4));
   };
 
@@ -556,7 +556,7 @@ export default function SendTokensPage() {
                       <span style={{ color: theme.text.tertiary }}>...</span>
                     ) : (
                       <span className="font-semibold" style={{ color: theme.text.primary }}>
-                        {(Math.floor(parseFloat(assetBalance || '0') * 10000) / 10000).toFixed(4)} {selectedToken.symbol}
+                        {(Math.trunc(parseFloat(assetBalance || '0') * 10000) / 10000).toFixed(4)} {selectedToken.symbol}
                       </span>
                     )}
                   </div>
